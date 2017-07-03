@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+
+
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -91,13 +95,17 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                //Todo add settings
+                return true;
+            case R.id.action_logout:
+                FirebaseAuth.getInstance().signOut();
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -124,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addToScrollView(String message){
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        llp.setMargins(0, 0, 0, 20); // llp.setMargins(left, top, right, bottom);
+
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.scrollLayout);
 
         TextView textView = new TextView(this);
@@ -131,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
         textView.setBackgroundResource(R.drawable.message_background);
         textView.setTextColor(Color.BLACK);
         textView.setTextSize(20);
-        textView.setPadding(35,10,10,5);
+        textView.setPadding(35,10,25,10);
+        textView.setLayoutParams(llp);
 
         linearLayout.addView(textView);
     }
@@ -146,5 +158,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.d("DataBase", "reading from database");
+    }
+
+    private void logout(){
+        if(mAuth.getCurrentUser() == null){
+            Intent authActivity = new Intent(this, Authentication.class);
+            startActivity(authActivity);
+        }else{
+            Toast.makeText(MainActivity.this, "Logout failed.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -54,7 +54,7 @@ public class Authentication extends AppCompatActivity {
         });
 
         //Todo remove sign out user on start (for testing)
-        FirebaseAuth.getInstance().signOut();
+        //FirebaseAuth.getInstance().signOut();
     }
 
     @Override
