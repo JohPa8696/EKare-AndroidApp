@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").
+                child(mAuth.getCurrentUser().getUid());
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void onButtonTap(View v){
@@ -150,13 +150,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void printUserInfo(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            User userInfo = ds.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
-            String message = "Name: " + userInfo.getName() + "\n"
-                    + "E-mail: " + userInfo.getEmail() + "\n"
-                    + "Phone: " + userInfo.getPhone();
-            addToScrollView(message);
-        }
+        User userInfo = dataSnapshot.getValue(User.class);
+        String message = "Name: " + userInfo.getName() + "\n"
+                + "E-mail: " + userInfo.getEmail() + "\n"
+                + "Phone: " + userInfo.getPhone();
+        addToScrollView(message);
 
         Log.d("DataBase", "reading from database");
     }
