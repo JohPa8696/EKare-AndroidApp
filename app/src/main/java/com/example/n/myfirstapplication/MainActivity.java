@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
             case R.id.action_settings:
-                //Todo add settings
+                Intent profileActivity = new Intent(this, Profile.class);
+                startActivity(profileActivity);
                 return true;
             case R.id.action_logout:
                 FirebaseAuth.getInstance().signOut();
