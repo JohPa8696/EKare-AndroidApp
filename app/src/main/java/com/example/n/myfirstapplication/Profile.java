@@ -7,18 +7,20 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private TextView name = (TextView) findViewById(R.id.textName);
-    private TextView email = (TextView) findViewById(R.id.textEmail);
-    private TextView phone = (TextView) findViewById(R.id.textPhone);
-    private TextView location = (TextView) findViewById(R.id.textLocation); //maybe
+    private TextView name;
+    private TextView email;
+    private TextView phone;
+    //private TextView location = (TextView) findViewById(R.id.textLocation); //maybe
 
 
     @Override
@@ -28,6 +30,22 @@ public class Profile extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        name = (TextView) findViewById(R.id.textName);
+        email = (TextView) findViewById(R.id.textEmail);
+        phone = (TextView) findViewById(R.id.textPhone);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                printUserInfo(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void printUserInfo(DataSnapshot dataSnapshot){
