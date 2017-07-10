@@ -22,14 +22,14 @@
         <activity android:name=".Authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".CreateAccount" />
-
-        <activity android:name=".Profile">
-        </activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".NavigationActivity" />
+        <activity android:name=".contactActivity"></activity>
     </application>
 
 </manifest>

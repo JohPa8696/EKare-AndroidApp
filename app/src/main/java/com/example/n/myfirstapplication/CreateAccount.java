@@ -80,7 +80,7 @@ public class CreateAccount extends AppCompatActivity {
             Toast.makeText(CreateAccount.this, "Authentication Success.",
                     Toast.LENGTH_SHORT).show();
 
-            Intent myintent = new Intent(this, MainActivity.class);
+            Intent myintent = new Intent(this, NavigationActivity.class);
             startActivity(myintent);
         }else{
 

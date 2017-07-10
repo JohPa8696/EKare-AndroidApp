@@ -2,6 +2,7 @@ package com.example.n.myfirstapplication;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,8 +15,8 @@ public class User {
     public String name;
     public String email;
     public String phone;
-    public List<Message> messagesRecieved;
-    public List<User> contacts;
+    public List<Message> messagesReceived;
+    public HashMap<String,String> contacts;
 
     public User(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -49,5 +50,21 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Message> getMessagesReceived() {
+        return messagesReceived;
+    }
+
+    public void setMessagesReceived(List<Message> messagesReceived) {
+        this.messagesReceived = messagesReceived;
+    }
+
+    public HashMap<String, String> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(HashMap<String, String> contacts) {
+        this.contacts = contacts;
     }
 }
