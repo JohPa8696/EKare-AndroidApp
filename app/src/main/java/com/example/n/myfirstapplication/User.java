@@ -17,6 +17,7 @@ public class User {
     public String phone;
     public List<Message> messagesReceived;
     public HashMap<String,String> contacts;
+    public HashMap<String,String> requests;
 
     public User(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -66,5 +67,13 @@ public class User {
 
     public void setContacts(HashMap<String, String> contacts) {
         this.contacts = contacts;
+    }
+
+    public HashMap<String, String> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(HashMap<String, String> requests) {
+        this.requests = requests;
     }
 }
