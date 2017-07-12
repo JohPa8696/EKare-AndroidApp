@@ -39,7 +39,7 @@ public class contactActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mContacts = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("contacts");
 
-        mContacts.addListenerForSingleValueEvent(new ValueEventListener() {
+        mContacts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
