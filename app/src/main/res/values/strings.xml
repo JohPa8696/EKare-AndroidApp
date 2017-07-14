@@ -8,4 +8,6 @@
     <string name="label_location">Location:</string>
     <string name="label_NULL">NULL</string>
     <string name="title_activity_contact">contactActivity</string>
+    <string name="button_add">Add</string>
+    <string name="button_ignore">Ignore</string>
 </resources>

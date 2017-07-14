@@ -161,7 +161,7 @@ public class AddContactDialogFragment extends DialogFragment {
         });
     }
 
-
+    //ToDo check if request exists for either user
     public void reqCheckIfRequestExists(final String userToAdd, final String currentUser, final String otherUserID){
         //ToDo implement method
         Query findContactQuery = mDatabase.child("users").child(otherUserID).child("requests").orderByValue().equalTo(currentUser);
@@ -270,8 +270,8 @@ public class AddContactDialogFragment extends DialogFragment {
                     Toast.makeText(mContext, "Added contact", Toast.LENGTH_SHORT).show();
 
                     // create message log
-                    mDatabase.child("message-log").child(key).child("user1").setValue(currentUserEmail);
-                    mDatabase.child("message-log").child(key).child("user2").setValue(emailString);
+                    mDatabase.child("message_log").child(key).child("user1").setValue(currentUserEmail);
+                    mDatabase.child("message_log").child(key).child("user2").setValue(emailString);
 
 
                 }else{
