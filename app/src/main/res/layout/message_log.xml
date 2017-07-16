@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profilepic_tv"
+        android:text="Name"
+        android:layout_weight="0.05"
+       />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.95"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/latestmessage_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Name"
+                android:textColor="#c2c6b6"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                />
+
+            <TextView
+                android:id="@+id/timestamp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Name"
+                android:layout_alignParentRight="true"
+                android:textColor="#c2c6b6"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

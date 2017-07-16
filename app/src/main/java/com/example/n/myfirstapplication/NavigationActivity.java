@@ -22,7 +22,7 @@ public class NavigationActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        messagesIntent = new Intent(this, MainActivity.class);
+        messagesIntent = new Intent(this, MessageLogsActivity.class);
         messages = (Button) findViewById(R.id.messagesBtn);
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
