@@ -30,7 +30,8 @@
         <activity android:name=".Profile" />
         <activity android:name=".NavigationActivity" />
         <activity android:name=".contactActivity" />
-        <activity android:name=".MessageLogsActivity"></activity>
+        <activity android:name=".ui.activities.MessageLogsActivity" />
+        <activity android:name=".ui.activities.MessageScreenActivity"></activity>
     </application>
 
 </manifest>

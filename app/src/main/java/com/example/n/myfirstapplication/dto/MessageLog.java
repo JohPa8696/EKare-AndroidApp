@@ -1,4 +1,4 @@
-package com.example.n.myfirstapplication;
+package com.example.n.myfirstapplication.dto;
 
 /**
  * Created by johnn on 7/15/2017.

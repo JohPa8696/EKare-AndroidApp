@@ -1,10 +1,13 @@
-package com.example.n.myfirstapplication;
+package com.example.n.myfirstapplication.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.n.myfirstapplication.dto.MessageLog;
+import com.example.n.myfirstapplication.R;
 
 import java.util.List;
 
@@ -40,7 +43,7 @@ public class MessageLogListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = View.inflate(mContext,R.layout.message_log,null);
+        View v = View.inflate(mContext, R.layout.message_log,null);
         TextView profilePic = (TextView) v.findViewById(R.id.profilepic_tv);
         TextView username = (TextView) v.findViewById(R.id.username_tv);
         TextView latestMessage = (TextView) v.findViewById(R.id.latestmessage_tv);

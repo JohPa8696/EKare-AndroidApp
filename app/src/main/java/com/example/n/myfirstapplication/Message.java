@@ -7,27 +7,27 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 
 @IgnoreExtraProperties
-class Message {
+public class Message {
     public String imageUrl;
     public String message;
     public String sender; //user which send
-    public String time;
+    public String timeDate;
 
     public Message(){}
 
-    public Message( String imageUrl, String message, String sender,String time){
-        this.time = time;
+    public Message( String imageUrl, String message, String sender,String timeDate){
+        this.timeDate = timeDate;
         this.message = message;
         this.imageUrl= imageUrl;
         this.sender = sender;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimeDate() {
+        return timeDate;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimeDate(String time) {
+        this.timeDate = time;
     }
 
     public String getMessage() {
