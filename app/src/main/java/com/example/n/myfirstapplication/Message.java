@@ -7,30 +7,27 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 
 @IgnoreExtraProperties
-class Message {
-
-    public String time;
-    public String message;
+public class Message {
     public String imageUrl;
-    public String userTo; //user which receives
-    public String userFrom; //user which sent
+    public String message;
+    public String sender; //user which send
+    public String timeDate;
 
     public Message(){}
 
-    public Message(String time, String message, String imageUrl, String userTo, String userFrom){
-        this.time = time;
+    public Message( String imageUrl, String message, String sender,String timeDate){
+        this.timeDate = timeDate;
         this.message = message;
         this.imageUrl= imageUrl;
-        this.userTo = userTo;
-        this.userFrom = userFrom;
+        this.sender = sender;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimeDate() {
+        return timeDate;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimeDate(String time) {
+        this.timeDate = time;
     }
 
     public String getMessage() {
@@ -49,19 +46,13 @@ class Message {
         this.imageUrl = imageUrl;
     }
 
-    public String getUserTo() {
-        return userTo;
+    public String getSender() {
+        return sender;
     }
 
-    public void setUserTo(String userTo) {
-        this.userTo = userTo;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getUserFrom() {
-        return userFrom;
-    }
 
-    public void setUserFrom(String userFrom) {
-        this.userFrom = userFrom;
-    }
 }
