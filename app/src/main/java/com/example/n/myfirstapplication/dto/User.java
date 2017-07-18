@@ -1,5 +1,8 @@
-package com.example.n.myfirstapplication;
+package com.example.n.myfirstapplication.dto;
 
+import android.content.Context;
+
+import com.example.n.myfirstapplication.Message;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
@@ -16,7 +19,7 @@ public class User {
     public String email;
     public String phone;
     public List<Message> messagesReceived;
-    public HashMap<String,String> contacts;
+    public HashMap<String,Contact> contacts;
     public HashMap<String,String> requests;
 
     public User(){
@@ -61,11 +64,11 @@ public class User {
         this.messagesReceived = messagesReceived;
     }
 
-    public HashMap<String, String> getContacts() {
+    public HashMap<String, Contact> getContacts() {
         return contacts;
     }
 
-    public void setContacts(HashMap<String, String> contacts) {
+    public void setContacts(HashMap<String, Contact> contacts) {
         this.contacts = contacts;
     }
 

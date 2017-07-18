@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.n.myfirstapplication.dto.Contact;
+import com.example.n.myfirstapplication.dto.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class contactActivity extends AppCompatActivity {
@@ -221,7 +224,7 @@ public class contactActivity extends AppCompatActivity {
             holder.addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addContact(emailToAdd);
+                    addContactNew(emailToAdd);
                 }
             });
 
@@ -239,6 +242,138 @@ public class contactActivity extends AppCompatActivity {
         public void updateList(ArrayList<String> list){
             this.list = list;
         }
+
+
+        // Top Level function to add contact
+        public void addContactNew(final String emailString){
+            mUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final User currentUser = dataSnapshot.getValue(User.class);
+
+                    if (!currentUser.getEmail().equals(currentUser)){ // prevent adding themselves
+                        findContact(emailString, currentUser);
+                    }else{
+                        Toast.makeText(mContext, "Cannot add yourself", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        // gets the other users key to allow for query
+        public void findContact(final String emailString, final User currentUser){
+            Query findContactQuery = mDatabase.child("users").orderByChild("email").equalTo(emailString);
+            findContactQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String toastMessage = "Default";
+
+                    if(dataSnapshot.exists()){
+                        for (DataSnapshot ds : dataSnapshot.getChildren()){
+                            ds.getKey();
+                            addContactNew(ds.getKey(), currentUser);
+                        }
+                    }else{
+                        toastMessage = "User does not exist!";
+                    }
+
+                    Toast.makeText(mContext, toastMessage, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        public void addContactNew(final String otherKey, final User currentUser){
+            DatabaseReference otherUserRef = mDatabase.child("users").child(otherKey);
+            otherUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String toastMessage = "Default";
+
+                    if(dataSnapshot.exists()){
+                        User otherUser = dataSnapshot.getValue(User.class);
+                        HashMap<String, Contact> otherUserContacts = otherUser.getContacts();
+                        HashMap<String, Contact> currentUserContacts = currentUser.getContacts();
+
+                        Contact contactToCompare = new Contact();
+                        contactToCompare.setEmail(otherUser.getEmail());
+
+                        // Adds contact if it does not currently exist
+                        if(currentUserContacts == null || !currentUserContacts.containsValue(contactToCompare)){ //check if contact exists
+                            contactToCompare.setEmail(currentUser.getEmail());
+                            if(otherUserContacts == null  || !otherUserContacts.containsValue(contactToCompare)){ //check if contact exists
+                                // Generate unique key
+                                DatabaseReference keyRef = mUser.child("contacts").push();
+                                String key = keyRef.getKey();
+
+                                // Create contacts to add
+                                Contact otherContact = new Contact(otherUser.getName(), otherUser.getEmail(), true, true);
+                                Contact currentContact = new Contact(currentUser.getName(), currentUser.getEmail(), true, true);
+
+                                // add contacts to the users contact list
+                                mUser.child("contacts").child(key).setValue(otherContact);
+                                mDatabase.child("users").child(otherKey).child("contacts").child(key).setValue(currentContact);
+
+                                // create message log between users
+                                mDatabase.child("message_log").child(key).child("user1").setValue(otherContact.getEmail());
+                                mDatabase.child("message_log").child(key).child("user2").setValue(currentContact.getEmail());
+
+                                // remove the contact request
+                                removeRequest(otherUser.getEmail());
+                            }else{
+                                toastMessage = "Contact already added!";
+                            }
+                        }else{
+                            toastMessage = "Contact already added!";
+                        }
+
+
+
+                    }else{
+                        toastMessage = "User does not exist!";
+                    }
+
+                    Toast.makeText(mContext, toastMessage, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // top level function to add contact
         public void addContact(final String emailString){
