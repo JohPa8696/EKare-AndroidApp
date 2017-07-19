@@ -19,6 +19,13 @@ public class Contact {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
+    public Contact(String email){
+        this.name = "name";
+        this.email = email;
+        this.messagePermission = true;
+        this.imagePermission = true;
+    }
+
     public Contact(String name, String email, boolean messagePermission, boolean imagePermission){
         this.name = name;
         this.email = email;
@@ -65,7 +72,7 @@ public class Contact {
             return false;
         }
         Contact contact = (Contact) o;
-        return (email == contact.email);
+        return (email.equals(contact.email));
     }
 
     @Override

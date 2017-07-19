@@ -93,7 +93,7 @@ public class contactActivity extends AppCompatActivity {
                 // update list view
                 if(dataSnapshot.exists()){
                     for (DataSnapshot ds: dataSnapshot.getChildren()){
-                        requestList.add(ds.getValue().toString());
+                        requestList.add(ds.getValue(Contact.class).getEmail());
                     }
                     updateRequestList();
                 }
@@ -118,10 +118,8 @@ public class contactActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                requestList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    requestList.add(ds.getValue().toString());
-                }
+                Contact requestRemoved = dataSnapshot.getValue(Contact.class);
+                requestList.remove(requestRemoved.getEmail());
                 updateRequestList();
             }
 
@@ -335,9 +333,6 @@ public class contactActivity extends AppCompatActivity {
                         }else{
                             toastMessage = "Contact already added!";
                         }
-
-
-
                     }else{
                         toastMessage = "User does not exist!";
                     }
@@ -356,7 +351,7 @@ public class contactActivity extends AppCompatActivity {
         //Remove request
         public void removeRequest(final String emailToRemove){
 
-            Query removeRequestQuery = mRequests.orderByValue().equalTo(emailToRemove);
+            Query removeRequestQuery = mRequests.orderByChild("email").equalTo(emailToRemove);
             removeRequestQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

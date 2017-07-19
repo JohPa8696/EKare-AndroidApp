@@ -10,4 +10,6 @@
     <string name="title_activity_contact">contactActivity</string>
     <string name="button_add">Add</string>
     <string name="button_ignore">Ignore</string>
+    <string name="switch_messages">Messages</string>
+    <string name="switch_images">images</string>
 </resources>
