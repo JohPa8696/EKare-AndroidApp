@@ -5,4 +5,8 @@ package com.example.n.myfirstapplication;
  */
 
 public class ItemRequest extends ItemInListView {
+    public ItemRequest(String name, String email){
+        super(name, email, 1);
+        this.setRequest(true);
+    }
 }
