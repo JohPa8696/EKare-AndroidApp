@@ -1,5 +1,8 @@
-package com.example.n.myfirstapplication;
+package com.example.n.myfirstapplication.dto;
 
+import android.content.Context;
+
+import com.example.n.myfirstapplication.Message;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
@@ -16,8 +19,8 @@ public class User {
     public String email;
     public String phone;
     public List<Message> messagesReceived;
-    public HashMap<String,String> contacts;
-    public HashMap<String,String> requests;
+    public HashMap<String,Contact> contacts;
+    public HashMap<String,Contact> requests;
 
     public User(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -61,19 +64,19 @@ public class User {
         this.messagesReceived = messagesReceived;
     }
 
-    public HashMap<String, String> getContacts() {
+    public HashMap<String, Contact> getContacts() {
         return contacts;
     }
 
-    public void setContacts(HashMap<String, String> contacts) {
+    public void setContacts(HashMap<String, Contact> contacts) {
         this.contacts = contacts;
     }
 
-    public HashMap<String, String> getRequests() {
+    public HashMap<String, Contact> getRequests() {
         return requests;
     }
 
-    public void setRequests(HashMap<String, String> requests) {
+    public void setRequests(HashMap<String, Contact> requests) {
         this.requests = requests;
     }
 }

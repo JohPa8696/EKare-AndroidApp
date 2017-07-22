@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.n.myfirstapplication.dto.Contact;
+import com.example.n.myfirstapplication.dto.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 /**
  * Created by n on 10/07/2017.
@@ -54,7 +58,7 @@ public class AddContactDialogFragment extends DialogFragment {
                 .setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send request to add contact
-                        requestToAddContact(email.getText().toString());
+                        newRequest(email.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -68,12 +72,100 @@ public class AddContactDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    public void addContact(){
-        DatabaseReference contactRef = mUser.child("contacts").push();
-        if (!email.getText().toString().equals("")){
-            contactRef.setValue(email.getText().toString());
-        }
+    // Gets the current user object
+    public void newRequest(final String userToAdd){
+        mUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final User currentUser = dataSnapshot.getValue(User.class);
+                if(!currentUser.getEmail().equals(userToAdd)){
+                    newRequest(userToAdd, currentUser);
+                }else{
+                    Toast.makeText(mContext, "Cannot add yourself!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
+    // Gets the other users ID
+    public void newRequest(final String userToAdd, final User currentUser){
+        Query findContactQuery = mDatabase.child("users").orderByChild("email").equalTo(userToAdd);
+        findContactQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String otherUserID = null;
+                    for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
+                        otherUserID = childSnapshot.getKey();
+                    }
+                    newRequest(userToAdd, currentUser, otherUserID);
+
+                }else{
+                    Toast.makeText(mContext, "User does not exist!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // Sends a request to the other user
+    public void newRequest(final String userToAdd, final User currentUser, final String otherUserID){
+        DatabaseReference otherUserRef = mDatabase.child("users").child(otherUserID);
+        otherUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    //get the email to insert for the other persons
+
+                    User otherUser = dataSnapshot.getValue(User.class);
+
+
+                    Contact currentUserContact = new Contact(currentUser.getName(), currentUser.getEmail() ,true , true);
+                    Contact otherUserContact = new Contact(otherUser.getName(), otherUser.getEmail(), true, true);
+
+                    HashMap<String, Contact> currentUserContactList = currentUser.getContacts();
+                    HashMap<String, Contact> otherUserContactList = otherUser.getContacts();
+
+                    HashMap<String, Contact> currentUserRequestList = currentUser.getRequests();
+                    HashMap<String, Contact> otherUserRequestList = otherUser.getRequests();
+
+                    if((currentUserContactList == null || !currentUserContactList.containsValue(otherUserContact))
+                            && (otherUserContactList == null || !otherUserContactList.containsValue(currentUserContact))
+                            && (currentUserRequestList == null || !currentUserRequestList.containsValue(otherUserContact))
+                            && (otherUserRequestList == null || !otherUserRequestList.containsValue(currentUserContact))){
+
+                        DatabaseReference requestRef = mDatabase.child("users").child(otherUserID).child("requests").push();
+                        requestRef.setValue(currentUserContact);
+
+                        Toast.makeText(mContext, "Request Sent!", Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Toast.makeText(mContext, "Failed user already contact or request already sent", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(mContext, "User does not exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     // top level function to request for contact to be added
     public void requestToAddContact(final String userToAdd){
@@ -161,7 +253,7 @@ public class AddContactDialogFragment extends DialogFragment {
         });
     }
 
-
+    //ToDo check if request exists for either user
     public void reqCheckIfRequestExists(final String userToAdd, final String currentUser, final String otherUserID){
         //ToDo implement method
         Query findContactQuery = mDatabase.child("users").child(otherUserID).child("requests").orderByValue().equalTo(currentUser);
@@ -185,105 +277,5 @@ public class AddContactDialogFragment extends DialogFragment {
 
             }
         });
-
-
     }
-
-
-    // top level function to add contact
-    public void addContact(final String emailString){
-        mUser.child("email").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final String currentUserEmail = dataSnapshot.getValue(String.class);
-                checkIfCurrentUser(emailString, currentUserEmail);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-
-    //check to prevent user from adding themselves
-    public void checkIfCurrentUser(final String emailString, final String currentUserEmail){
-        Query checkCurrentUser = mUser.orderByValue().equalTo(emailString);
-        checkCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //User currentUser = (User) dataSnapshot.getValue(User.class);
-                if (dataSnapshot.exists()){
-                    Toast.makeText(mContext, "Cannot add yourself!", Toast.LENGTH_SHORT).show();
-                }else{
-                    checkIfAdded(emailString, currentUserEmail);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    //check to prevent adding duplicate contacts
-    public void checkIfAdded(final String emailString, final String currentUserEmail){
-        Query checkContactList = mUser.child("contacts").orderByValue().equalTo(emailString);
-        checkContactList.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
-                    checkIfExists(emailString, currentUserEmail);
-                }else{
-                    Toast.makeText(mContext, "User already in contacts!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    //check to see if user exists in database
-    public void checkIfExists(final String emailString, final String currentUserEmail){
-        //tries to find the contact in the list of users and add to contacts
-        Query findContactQuery = mDatabase.child("users").orderByChild("email").equalTo(emailString);
-        findContactQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    DatabaseReference contactRef = mUser.child("contacts").push();
-                    contactRef.setValue(emailString);
-
-                    String key = contactRef.getKey();
-                    String otherUserID = null;
-                    for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
-                        otherUserID = childSnapshot.getKey();
-                    }
-                    //get the email to insert for the other persons
-                    mDatabase.child("users").child(otherUserID).child("contacts").child(key).setValue(currentUserEmail);
-                    Toast.makeText(mContext, "Added contact", Toast.LENGTH_SHORT).show();
-
-                    // create message log
-                    mDatabase.child("message-log").child(key).child("user1").setValue(currentUserEmail);
-                    mDatabase.child("message-log").child(key).child("user2").setValue(emailString);
-
-
-                }else{
-                    Toast.makeText(mContext, "User does not exist!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 }
