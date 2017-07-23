@@ -11,6 +11,7 @@ public class MessageLog {
     private String lastMessage;
     private String timeStamp;
 
+    public MessageLog(){}
     public MessageLog(String messageLogId, String userName, String lastMessage, String timeStamp) {
         this.messageLogId = messageLogId;
         this.userName = userName;

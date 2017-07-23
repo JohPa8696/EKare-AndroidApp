@@ -20,10 +20,11 @@ import java.util.List;
 public class MessageAdapter extends BaseAdapter {
     private Context context;
     private List<Message> messages;
-
-    public MessageAdapter(Context context, List<Message> messages) {
+    private String senderUsername;
+    public MessageAdapter(Context context, List<Message> messages,String sennderUsername) {
         this.context = context;
         this.messages = messages;
+        this.senderUsername =sennderUsername;
     }
 
     @Override
@@ -48,9 +49,9 @@ public class MessageAdapter extends BaseAdapter {
         TextView messageBody = (TextView) v.findViewById(R.id.message_tv);
         TextView timestamp = (TextView) v.findViewById(R.id.timestamp_tv);
 
-        sender.setText(messages.get(i).getSender());
+        sender.setText(senderUsername);
         messageBody.setText(messages.get(i).getMessage());
-        timestamp.setText(messages.get(i).getTimeDate());
+        timestamp.setText(messages.get(i).getTime());
 
         return v;
     }

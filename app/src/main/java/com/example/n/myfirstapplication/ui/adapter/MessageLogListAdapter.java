@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.dto.MessageLog;
 import com.example.n.myfirstapplication.R;
 
@@ -18,22 +19,22 @@ import java.util.List;
 public class MessageLogListAdapter extends BaseAdapter{
 
     private Context mContext;
-    private List<MessageLog> messageLogList;
+    private List<MessageLog> contactList;
 
     public MessageLogListAdapter(Context mContext, List<MessageLog> conversations) {
         this.mContext = mContext;
-        this.messageLogList = conversations;
+        this.contactList = conversations;
     }
 
 
     @Override
     public int getCount() {
-        return messageLogList.size();
+        return contactList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return messageLogList.get(i);
+        return contactList.get(i);
     }
 
     @Override
@@ -51,11 +52,12 @@ public class MessageLogListAdapter extends BaseAdapter{
 
         //TODO :change profile pic
         profilePic.setText("PROFILE PIC");
-        username.setText(messageLogList.get(i).getUserName());
-        latestMessage.setText(messageLogList.get(i).getLastMessage());
-        timestamp.setText(messageLogList.get(i).getTimeStamp());
+        // WRONG USERNAME . FIX LATER
+        username.setText(contactList.get(i).getUserName());
+        latestMessage.setText(contactList.get(i).getLastMessage());
+        timestamp.setText(contactList.get(i).getTimeStamp());
 
-        v.setTag(messageLogList.get(i).getMessageLogId());
+        v.setTag(contactList.get(i).getMessageLogId());
 
         return v;
     }
