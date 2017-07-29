@@ -61,6 +61,8 @@ public class MessageAdapter extends BaseAdapter {
 
         if(!uri.equals("")){
             StorageReference imageRef = storageReference.child("image").child(uri);
+            image.getLayoutParams().height=500;
+            image.getLayoutParams().width=600;
             // Load the image using Glide
             Glide.with(context)
                     .using(new FirebaseImageLoader())
@@ -71,7 +73,7 @@ public class MessageAdapter extends BaseAdapter {
         sender.setText(messages.get(i).getSender());
         messageBody.setText(messages.get(i).getMessage());
         timestamp.setText(messages.get(i).getTime());
-
         return v;
     }
+
 }

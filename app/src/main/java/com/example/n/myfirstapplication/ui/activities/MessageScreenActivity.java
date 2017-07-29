@@ -70,7 +70,8 @@ public class MessageScreenActivity extends AppCompatActivity{
                 }
                 messageAdapter = new MessageAdapter(getApplicationContext(),messages);
                 messagesLv.setAdapter(messageAdapter);
-
+                // Manually set the scroll to the bottom of the message log
+                messagesLv.setSelection(messageAdapter.getCount()-1);
             }
 
             @Override
