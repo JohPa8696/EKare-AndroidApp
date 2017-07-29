@@ -52,7 +52,6 @@ public class MessageLogListAdapter extends BaseAdapter{
 
         //TODO :change profile pic
         profilePic.setText("PROFILE PIC");
-        // WRONG USERNAME . FIX LATER
         username.setText(contactList.get(i).getUserName());
         latestMessage.setText(contactList.get(i).getLastMessage());
         timestamp.setText(contactList.get(i).getTimeStamp());

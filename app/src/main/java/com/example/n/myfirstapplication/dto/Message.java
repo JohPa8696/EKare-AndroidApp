@@ -1,14 +1,13 @@
-package com.example.n.myfirstapplication;
+package com.example.n.myfirstapplication.dto;
 
-import com.google.firebase.database.IgnoreExtraProperties;
+//import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * Created by n on 7/07/2017.
  */
 
-@IgnoreExtraProperties
 public class Message {
-    public String imageUrl;
+    public String imageURL;
     public String message;
     public String sender; //user which send
     public String time;
@@ -16,12 +15,12 @@ public class Message {
 
     public Message(){}
 
-    public Message( String imageUrl, String message, String sender,String time, String date) {
+    public Message( String imageURL, String message, String sender,String time, String date) {
+        this.imageURL = imageURL;
+        this.message = message;
+        this.sender = sender;
         this.time = time;
         this.date = date;
-        this.message = message;
-        this.imageUrl = imageUrl;
-        this.sender = sender;
     }
 
     public String getTime() {
@@ -48,12 +47,12 @@ public class Message {
         this.message = message;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getSender() {

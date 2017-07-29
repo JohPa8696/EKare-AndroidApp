@@ -1,15 +1,21 @@
 package com.example.n.myfirstapplication.ui.adapter;
 
 import android.content.Context;
-import com.example.n.myfirstapplication.Message;
+
+import com.bumptech.glide.Glide;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.n.myfirstapplication.R;
+import com.example.n.myfirstapplication.dto.Message;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -20,11 +26,13 @@ import java.util.List;
 public class MessageAdapter extends BaseAdapter {
     private Context context;
     private List<Message> messages;
-    private String senderUsername;
-    public MessageAdapter(Context context, List<Message> messages,String sennderUsername) {
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    public MessageAdapter(Context context, List<Message> messages) {
         this.context = context;
         this.messages = messages;
-        this.senderUsername =sennderUsername;
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference= firebaseStorage.getReference();
     }
 
     @Override
@@ -48,8 +56,19 @@ public class MessageAdapter extends BaseAdapter {
         TextView sender = (TextView) v.findViewById(R.id.profilepicmessage_tv);
         TextView messageBody = (TextView) v.findViewById(R.id.message_tv);
         TextView timestamp = (TextView) v.findViewById(R.id.timestamp_tv);
+        ImageView image = (ImageView) v.findViewById(R.id.accidentscene);
+        String uri= messages.get(i).getImageURL();
 
-        sender.setText(senderUsername);
+        if(!uri.equals("")){
+            StorageReference imageRef = storageReference.child("image").child(uri);
+            // Load the image using Glide
+            Glide.with(context)
+                    .using(new FirebaseImageLoader())
+                    .load(imageRef)
+                    .into(image);
+        }
+        //Download the image, take alot of time
+        sender.setText(messages.get(i).getSender());
         messageBody.setText(messages.get(i).getMessage());
         timestamp.setText(messages.get(i).getTime());
 

@@ -1,6 +1,5 @@
 package com.example.n.myfirstapplication.ui.activities;
 
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,14 +10,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.n.myfirstapplication.Manifest;
-import com.example.n.myfirstapplication.Message;
 import com.example.n.myfirstapplication.R;
+import com.example.n.myfirstapplication.dto.Message;
 import com.example.n.myfirstapplication.ui.adapter.MessageAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +38,6 @@ public class MessageScreenActivity extends AppCompatActivity{
     private ListView messagesLv;
     private MessageAdapter messageAdapter;
     private List<Message> messages;
-    private String senderUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +46,6 @@ public class MessageScreenActivity extends AppCompatActivity{
         // Extract message log id
         Bundle mlID = getIntent().getExtras();
         String messageLogId= mlID.get("id").toString();
-        senderUsername = mlID.get("username").toString();
         mdatabase = FirebaseDatabase.getInstance();
         mdbReference = mdatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -62,9 +57,9 @@ public class MessageScreenActivity extends AppCompatActivity{
 
         // Get messages from database
 
-        DatabaseReference messagesdbRef= mdbReference.child("message_log").child(messageLogId).child("messages");
+        DatabaseReference messagesDBRef= mdbReference.child("message_log").child(messageLogId).child("messages");
 
-        messagesdbRef.addValueEventListener(new ValueEventListener() {
+        messagesDBRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 messages.clear();
@@ -73,7 +68,7 @@ public class MessageScreenActivity extends AppCompatActivity{
                     Message message = child.getValue(Message.class);
                     messages.add(message);
                 }
-                messageAdapter = new MessageAdapter(getApplicationContext(),messages, senderUsername);
+                messageAdapter = new MessageAdapter(getApplicationContext(),messages);
                 messagesLv.setAdapter(messageAdapter);
 
             }
@@ -83,7 +78,33 @@ public class MessageScreenActivity extends AppCompatActivity{
 
             }
         });
-        
+
+        messagesDBRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
@@ -95,6 +116,31 @@ public class MessageScreenActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.CALL_PHONE)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
 
         switch (item.getItemId()){
             case R.id.call_emergency:
@@ -102,36 +148,12 @@ public class MessageScreenActivity extends AppCompatActivity{
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
 
                 callIntent.setData(Uri.parse("tel:0221925995"));
-                if (ContextCompat.checkSelfPermission(this,
-                        android.Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-                    // Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            android.Manifest.permission.CALL_PHONE)) {
-
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-
-                    } else {
-
-                        // No explanation needed, we can request the permission.
-
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{android.Manifest.permission.CALL_PHONE},
-                                MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                }
                 startActivity(callIntent);
             }
         return super.onOptionsItemSelected(item);
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -152,14 +174,5 @@ public class MessageScreenActivity extends AppCompatActivity{
             // other 'case' lines to check for other
             // permissions this app might request
         }
-    }
-    private boolean checkPermission(){
-        int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE);
-        if(permissionCheck == PackageManager.PERMISSION_GRANTED){
-            return true;
-        }else{
-            return false;
-        }
-
     }
 }
