@@ -1,8 +1,5 @@
 package com.example.n.myfirstapplication.dto;
 
-import android.content.Context;
-
-import com.example.n.myfirstapplication.Message;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;

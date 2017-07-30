@@ -73,7 +73,7 @@ public class MessageLogsActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(),"CLICKED" + view.getTag(),Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
                         bundle.putString("id",view.getTag().toString());
-                        bundle.putString("username",((MessageLog)adapter.getItem(i)).getUserName());
+                        bundle.putString("title",((MessageLog)adapter.getItem(i)).getUserName());
                         messagesScreen.putExtras(bundle);
                         startActivity(messagesScreen);
                     }
