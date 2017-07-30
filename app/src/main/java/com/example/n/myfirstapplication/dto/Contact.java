@@ -14,6 +14,8 @@ public class Contact {
     public String email;
     public boolean messagePermission;
     public boolean imagePermission;
+    public String lastMessage ="";
+    public String date ="";
 
     public Contact(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -31,6 +33,30 @@ public class Contact {
         this.email = email;
         this.messagePermission = messagePermission;
         this.imagePermission = imagePermission;
+    }
+    public Contact(String name, String email, boolean messagePermission, boolean imagePermission,String lastMessage, String timestamp){
+        this.name = name;
+        this.email = email;
+        this.messagePermission = messagePermission;
+        this.imagePermission = imagePermission;
+        this.lastMessage = lastMessage;
+        this.date= timestamp;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public String getTimestamp() {
+        return date;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.date = timestamp;
     }
 
     public String getName() {

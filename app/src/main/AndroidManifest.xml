@@ -33,5 +33,6 @@
         <activity android:name=".ui.activities.MessageLogsActivity" />
         <activity android:name=".ui.activities.MessageScreenActivity"></activity>
     </application>
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
 
 </manifest>
