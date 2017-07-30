@@ -51,11 +51,11 @@ public class Contact {
         this.lastMessage = lastMessage;
     }
 
-    public String getTimestamp() {
+    public String getDate() {
         return date;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setDate(String timestamp) {
         this.date = timestamp;
     }
 
