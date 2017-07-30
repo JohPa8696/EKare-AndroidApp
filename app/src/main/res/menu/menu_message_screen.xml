@@ -5,8 +5,13 @@
     tools:context="com.example.n.myfirstapplication.ui.activities.MessageScreenActivity">
 
     <item
+        android:id="@+id/call_person"
+        android:icon="@mipmap/ic_ohone1"
+        android:title="@string/call_person"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/call_emergency"
-        android:icon="@drawable/ic_call_emergency"
+        android:icon="@mipmap/ic_ambunance"
         android:title="@string/call_emergency_service"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

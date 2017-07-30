@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.dto.Message;
+import com.example.n.myfirstapplication.dto.User;
 import com.example.n.myfirstapplication.ui.adapter.MessageAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -38,6 +39,9 @@ public class MessageScreenActivity extends AppCompatActivity{
     private ListView messagesLv;
     private MessageAdapter messageAdapter;
     private List<Message> messages;
+
+    private String messageLogID;
+    private String contactPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +49,12 @@ public class MessageScreenActivity extends AppCompatActivity{
 
         // Extract message log id
         Bundle mlID = getIntent().getExtras();
-        String messageLogId= mlID.get("id").toString();
+
+        messageLogID= mlID.get("id").toString();
+        // Set the contact name in action bar
+        String title = mlID.get("title").toString();
+        setTitle(title);
+
         mdatabase = FirebaseDatabase.getInstance();
         mdbReference = mdatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -57,7 +66,7 @@ public class MessageScreenActivity extends AppCompatActivity{
 
         // Get messages from database
 
-        DatabaseReference messagesDBRef= mdbReference.child("message_log").child(messageLogId).child("messages");
+        DatabaseReference messagesDBRef= mdbReference.child("message_log").child(messageLogID).child("messages");
 
         messagesDBRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,6 +89,7 @@ public class MessageScreenActivity extends AppCompatActivity{
             }
         });
 
+        // FOR APPENDING SINGLE MESSAGE WHEN ARRIVED - TESTING RIGHT NOW
         messagesDBRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -106,7 +116,43 @@ public class MessageScreenActivity extends AppCompatActivity{
             }
         });
 
+        // Get the email of the contact
+        String userID = mAuth.getCurrentUser().getUid();
+        DatabaseReference contactEmailRef = mdbReference.child("users").child(userID)
+                .child("contacts").child(messageLogID).child("email");
+        final String[] contactEmail={""};
+        contactEmailRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                        contactEmail[0]=child.getValue().toString();
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        // Get the phone number of the contact
+        DatabaseReference usersReference = mdbReference.child("users");
+        usersReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                    User user = child.getValue(User.class);
+                    if(user.email.trim().equals(contactEmail[0].trim())){
+                        contactPhone = user.phone;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -146,10 +192,17 @@ public class MessageScreenActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.call_emergency:
 
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                Intent callEmergencyIntent = new Intent(Intent.ACTION_CALL);
 
-                callIntent.setData(Uri.parse("tel:0221925995"));
-                startActivity(callIntent);
+                callEmergencyIntent.setData(Uri.parse("tel:123"));
+                startActivity(callEmergencyIntent);
+                break;
+            case R.id.call_person:
+                final Intent callPersonIntent = new Intent(Intent.ACTION_CALL);
+                //Get person phone number
+                callPersonIntent.setData(Uri.parse("tel:"+contactPhone));
+                startActivity(callPersonIntent);
+                break;
             }
         return super.onOptionsItemSelected(item);
 
