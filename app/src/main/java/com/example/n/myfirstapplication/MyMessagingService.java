@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -11,8 +13,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class MyMessagingService extends FirebaseMessagingService {
     public MyMessagingService() {
@@ -22,7 +27,7 @@ public class MyMessagingService extends FirebaseMessagingService {
 
     // [START receive_message]
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(final RemoteMessage remoteMessage) {
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages are handled
         // here in onMessageReceived whether the app is in the foreground or background. Data messages are the type
@@ -41,8 +46,8 @@ public class MyMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            NotificationManager notif = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            final NotificationManager notif = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
             /*
             Notification notify=new Notification.Builder(getApplicationContext())
@@ -54,23 +59,34 @@ public class MyMessagingService extends FirebaseMessagingService {
             Intent phoneCall = new Intent(Intent.ACTION_CALL);
             phoneCall.setData(Uri.parse("tel: 0278272086"));
 
-            PendingIntent phoneCallIntent = PendingIntent.getActivity(getApplicationContext(), 0, phoneCall, PendingIntent.FLAG_UPDATE_CURRENT);
+            final PendingIntent phoneCallIntent = PendingIntent.getActivity(getApplicationContext(), 0, phoneCall, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            String imageURL = remoteMessage.getData().get("img_url");
+            final Bitmap[] bmp = new Bitmap[1];
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/myfirstapplication-5ad99.appspot.com/o/image%2F5s9kRal7NpU2taXF3TeQRplVtPC3-248524188.png?alt=media&token=77a54874-93c7-4042-9f21-d5d26c75408d");
+            httpsReference.getBytes(10485760).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                    NotificationCompat.Builder notify = new NotificationCompat.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.ic_launcher)
+                            .setContentText(remoteMessage.getData().get("message"))
+                            .setContentTitle(remoteMessage.getData().get("title"))
+                            .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                            .setLights(Color.RED, 3000, 3000)
+                            .setSound(alarmSound)
+                            .addAction(R.drawable.ic_call_emergency, "Call Emergency Services", phoneCallIntent)
+                            .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bmp[0]));
+
+                    //notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                    notif.notify(0, notify.build());
+                }
+            });
 
 
-
-            NotificationCompat.Builder notify = new NotificationCompat.Builder(getApplicationContext())
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setContentText(remoteMessage.getData().get("message"))
-                    .setContentTitle(remoteMessage.getData().get("title"))
-                    .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-                    .setLights(Color.RED, 3000, 3000)
-                    .setSound(alarmSound)
-                    .setContentIntent(phoneCallIntent)
-                    .addAction(R.drawable.ic_launcher, "test", phoneCallIntent);
-
-
-            //notify.flags |= Notification.FLAG_AUTO_CANCEL;
-            notif.notify(0, notify.build());
         }
 
         // Check if message contains a notification payload.
