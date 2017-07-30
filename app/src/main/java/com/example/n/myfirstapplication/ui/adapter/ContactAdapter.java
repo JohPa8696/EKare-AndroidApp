@@ -98,6 +98,7 @@ public class ContactAdapter  extends BaseAdapter{
                     holder = (ViewHolder) convertView.getTag();
                 }
                 holder.title.setText(items.get(position).getTitle());
+                convertView.setOnClickListener(null);
                 break;
             case TYPE_REQUEST:
                 if(convertView == null){

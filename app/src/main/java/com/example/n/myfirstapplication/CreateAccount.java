@@ -18,6 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
 
 public class CreateAccount extends AppCompatActivity {
 
@@ -103,7 +107,18 @@ public class CreateAccount extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            // add user to database
                             addUser(user.getUid());
+
+                            //Subscribe to topic
+                            try {
+                                FirebaseInstanceId.getInstance().deleteInstanceId();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            FirebaseMessaging.getInstance().subscribeToTopic(user.getUid());
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
