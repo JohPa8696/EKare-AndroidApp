@@ -16,6 +16,7 @@ public class Contact {
     public boolean imagePermission;
     public String lastMessage ="";
     public String date ="";
+    public String deviceToken;
 
     public Contact(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -89,6 +90,22 @@ public class Contact {
 
     public void setImagePermission(boolean imagePermission) {
         this.imagePermission = imagePermission;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
     @Override

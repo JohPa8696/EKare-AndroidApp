@@ -183,6 +183,8 @@ public class CreateAccount extends AppCompatActivity {
                 mEmailField.getText().toString(),
                 mPhoneField.getText().toString());
 
+        newUser.setDeviceToken(FirebaseInstanceId.getInstance().getToken());
+
         mDatabase.child("users").child(userId).setValue(newUser);
     }
 }

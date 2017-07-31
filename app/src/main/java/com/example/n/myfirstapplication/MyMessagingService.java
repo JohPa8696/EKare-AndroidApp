@@ -61,30 +61,37 @@ public class MyMessagingService extends FirebaseMessagingService {
 
             final PendingIntent phoneCallIntent = PendingIntent.getActivity(getApplicationContext(), 0, phoneCall, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            final NotificationCompat.Builder notify = new NotificationCompat.Builder(getApplicationContext())
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setContentText(remoteMessage.getData().get("message"))
+                    .setContentTitle(remoteMessage.getData().get("title"))
+                    .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                    .setLights(Color.RED, 3000, 3000)
+                    .setSound(alarmSound)
+                    .addAction(R.drawable.ic_call_emergency, "Emergency Service", phoneCallIntent);
+
             String imageURL = remoteMessage.getData().get("img_url");
-            final Bitmap[] bmp = new Bitmap[1];
 
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/myfirstapplication-5ad99.appspot.com/o/image%2F5s9kRal7NpU2taXF3TeQRplVtPC3-248524188.png?alt=media&token=77a54874-93c7-4042-9f21-d5d26c75408d");
-            httpsReference.getBytes(10485760).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            if(imageURL != null && !imageURL.equals("")){
+                final Bitmap[] bmp = new Bitmap[1];
 
-                    NotificationCompat.Builder notify = new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.ic_launcher)
-                            .setContentText(remoteMessage.getData().get("message"))
-                            .setContentTitle(remoteMessage.getData().get("title"))
-                            .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-                            .setLights(Color.RED, 3000, 3000)
-                            .setSound(alarmSound)
-                            .addAction(R.drawable.ic_call_emergency, "Call Emergency Services", phoneCallIntent)
-                            .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bmp[0]));
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference httpsReference = storage.getReferenceFromUrl(imageURL);
+                httpsReference.getBytes(10485760).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        notify.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bmp[0]));
 
-                    //notify.flags |= Notification.FLAG_AUTO_CANCEL;
-                    notif.notify(0, notify.build());
-                }
-            });
+                        //notify.flags |= Notification.FLAG_AUTO_CANCEL;
+                        notif.notify(0, notify.build());
+                    }
+                });
+            }else{
+                notif.notify(0, notify.build());
+            }
+
+
 
 
         }
