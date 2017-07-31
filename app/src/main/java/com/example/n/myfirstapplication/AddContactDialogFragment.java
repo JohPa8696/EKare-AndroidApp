@@ -57,7 +57,6 @@ public class AddContactDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View layout = inflater.inflate(R.layout.dialog_add_contact, null);
-        email = (EditText) layout.findViewById(R.id.textEmail);
 
         final AutoCompleteTextView searchContact = (AutoCompleteTextView) layout.findViewById(R.id.searchAutoComplete);
         searchContact.setThreshold(1);
@@ -71,7 +70,12 @@ public class AddContactDialogFragment extends DialogFragment {
                 .setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send request to add contact
-                        newRequest(email.getText().toString());
+                        if(searchContact.getText().toString() != null && !searchContact.getText().toString().equals("")){
+                            newRequest(searchContact.getText().toString());
+                        }else{
+                            Toast.makeText(mContext, "No user to add!", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
