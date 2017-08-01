@@ -14,7 +14,7 @@ import android.widget.ListView;
 import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.dto.Message;
 import com.example.n.myfirstapplication.dto.User;
-import com.example.n.myfirstapplication.ui.adapter.MessageAdapter;
+import com.example.n.myfirstapplication.ui.adapters.MessageAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

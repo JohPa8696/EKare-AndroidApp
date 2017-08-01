@@ -12,7 +12,10 @@
     <string name="button_ignore">Ignore</string>
     <string name="switch_messages">Messages</string>
     <string name="switch_images">images</string>
-
+    <!--Message screen-->
     <string name="call_emergency_service">Call emergency service</string>
     <string name="call_person">Call person</string>
+    <!--Login screen-->
+    <string name="enter_an_email">Enter your email</string>
+    <string name="enter_password">Enter your password</string>
 </resources>

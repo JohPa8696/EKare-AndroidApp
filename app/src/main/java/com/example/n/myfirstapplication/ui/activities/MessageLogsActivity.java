@@ -10,19 +10,15 @@ import android.widget.ListView;
 import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.dto.MessageLog;
 import com.example.n.myfirstapplication.R;
-import com.example.n.myfirstapplication.ui.adapter.MessageLogListAdapter;
+import com.example.n.myfirstapplication.ui.adapters.MessageLogListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 
 public class MessageLogsActivity extends AppCompatActivity {
