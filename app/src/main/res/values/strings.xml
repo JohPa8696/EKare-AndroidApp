@@ -18,4 +18,15 @@
     <!--Login screen-->
     <string name="enter_an_email">Enter your email</string>
     <string name="enter_password">Enter your password</string>
+
+    <!--Sign up screen-->
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="roles">
+        <item>Patient</item>
+        <item>Caregiver</item>
+    </string-array>
 </resources>
