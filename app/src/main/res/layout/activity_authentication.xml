@@ -103,13 +103,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@color/loginButton"
+
+                        android:background="@drawable/ripple_effect_login"
                         android:ems="8"
                         android:text="Login"
                         android:textColor="@color/white"
                         android:layout_marginTop="15dp"
                         android:textSize="15dp"
-                        android:layout_marginRight="1dp"/>
+                        android:layout_marginRight="1dp"
+                        android:onClick="check"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dip"
@@ -123,7 +125,7 @@
                         android:layout_gravity="center"
                         android:text="Sign up"
                         android:layout_marginTop="15dp"
-                        android:background="@color/signupButton"
+                        android:background="@drawable/ripple_effect_signup"
                         android:ems="8"
                         android:layout_marginLeft="1dp"
                         android:textSize="15dp"/>
