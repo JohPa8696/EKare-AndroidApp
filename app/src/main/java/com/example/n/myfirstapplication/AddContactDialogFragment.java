@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.dto.User;
-import com.example.n.myfirstapplication.ui.adapter.SearchAdapter;
+import com.example.n.myfirstapplication.ui.adapters.SearchAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

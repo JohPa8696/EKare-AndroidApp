@@ -1,4 +1,4 @@
-package com.example.n.myfirstapplication.ui.adapter;
+package com.example.n.myfirstapplication.ui.adapters;
 
 import android.content.Context;
 import android.util.Log;
