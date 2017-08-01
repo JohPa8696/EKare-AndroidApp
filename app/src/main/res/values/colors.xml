@@ -8,6 +8,6 @@
     <!--Login screen-->
     <color name="white">#ffffff</color>
     <color name="signupButton">#33cc33</color>
-    <color name="loginButton"> #2828a4</color>
+    <color name="loginButton"> #7171da</color>
     <color name="cbgray" >#a6a6a6</color>
 </resources>
