@@ -154,4 +154,5 @@ public class contactActivity extends AppCompatActivity {
         list.addAll(userContacts);
         contactAdapter.updateList(list);
     }
+
 }

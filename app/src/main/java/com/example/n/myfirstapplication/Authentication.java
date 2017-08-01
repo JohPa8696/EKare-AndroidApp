@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +16,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
 
 
 public class Authentication extends AppCompatActivity {
 
+    private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private EditText mEmailField;
     private EditText mPasswordField;
@@ -30,6 +38,8 @@ public class Authentication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
         mEmailField = (EditText) findViewById(R.id.field_email);
@@ -93,6 +103,17 @@ public class Authentication extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            /*
+                            //Subscribe to topic
+                            //FirebaseInstanceId.getInstance().getToken();
+                            Toast.makeText(Authentication.this, FirebaseInstanceId.getInstance().getToken(),
+                                    Toast.LENGTH_SHORT).show();
+
+                            updateUI(null);
+                            FirebaseMessaging.getInstance().subscribeToTopic(user.getUid());
+                            */
+                            mDatabase.child("users").child(user.getUid()).child("deviceToken").setValue(FirebaseInstanceId.getInstance().getToken());
+                            Log.d("TOKEN", FirebaseInstanceId.getInstance().getToken());
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

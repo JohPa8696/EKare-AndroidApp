@@ -1,5 +1,7 @@
 package com.example.n.myfirstapplication;
 
+import java.util.Objects;
+
 /**
  * Created by n on 19/07/2017.
  */
@@ -41,6 +43,11 @@ public class ItemInListView {
         this.messagePermission = messagePermission;
         this.imagePermission = imagePermission;
         type = 2;
+    }
+
+    @Override
+    public String toString(){
+        return (this.name + " " + this.email);
     }
 
     public String getTitle() {

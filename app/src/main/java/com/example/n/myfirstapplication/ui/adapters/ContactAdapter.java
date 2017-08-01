@@ -98,6 +98,7 @@ public class ContactAdapter  extends BaseAdapter{
                     holder = (ViewHolder) convertView.getTag();
                 }
                 holder.title.setText(items.get(position).getTitle());
+                convertView.setOnClickListener(null);
                 break;
             case TYPE_REQUEST:
                 if(convertView == null){
@@ -255,7 +256,10 @@ public class ContactAdapter  extends BaseAdapter{
 
                             // Create contacts to add
                             Contact otherContact = new Contact(otherUser.getName(), otherUser.getEmail(), true, true);
+                            otherContact.setDeviceToken(otherUser.getDeviceToken());
+
                             Contact currentContact = new Contact(currentUser.getName(), currentUser.getEmail(), true, true);
+                            currentContact.setDeviceToken(currentUser.getDeviceToken());
 
                             // add contacts to the users contact list
                             mUser.child("contacts").child(key).setValue(otherContact);

@@ -58,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
-
-
-        FirebaseMessaging.getInstance().subscribeToTopic("all");
-
         mUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

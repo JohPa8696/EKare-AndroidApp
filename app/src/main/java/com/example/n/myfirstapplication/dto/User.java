@@ -18,6 +18,7 @@ public class User {
     public List<Message> messagesReceived;
     public HashMap<String,Contact> contacts;
     public HashMap<String,Contact> requests;
+    public String deviceToken;
 
     public User(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -75,5 +76,13 @@ public class User {
 
     public void setRequests(HashMap<String, Contact> requests) {
         this.requests = requests;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 }
