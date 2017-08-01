@@ -29,7 +29,7 @@
         <activity android:name=".CreateAccount" />
         <activity android:name=".Profile" />
         <activity android:name=".NavigationActivity" />
-        <activity android:name=".contactActivity" />
+        <activity android:name=".ContactActivity" />
         <activity android:name=".ui.activities.MessageLogsActivity" />
         <activity android:name=".ui.activities.MessageScreenActivity"></activity>
     </application>

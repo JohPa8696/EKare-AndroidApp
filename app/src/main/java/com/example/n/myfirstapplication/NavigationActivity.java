@@ -33,7 +33,7 @@ public class NavigationActivity extends AppCompatActivity {
             }
         });
 
-        contactsIntent = new Intent(this, contactActivity.class);
+        contactsIntent = new Intent(this, ContactActivity.class);
         contacts = (Button) findViewById(R.id.contactBtn);
         contacts.setOnClickListener(new View.OnClickListener() {
             @Override

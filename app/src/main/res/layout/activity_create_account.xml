@@ -31,7 +31,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5">
                     <ImageButton
-                        android:id="@+id/signup_choose_pic"
+                        android:id="@+id/signup_take_pic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -48,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5">
                     <ImageButton
-                        android:id="@+id/signup_take_pic"
+                        android:id="@+id/signup_choose_pic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -89,7 +89,7 @@
                         android:textColor="@color/white"
                         android:background="@drawable/edittext_border"
                         android:ems="7"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="1dp"
                         android:paddingLeft="5dp"/>
@@ -111,7 +111,7 @@
                         android:textColor="@color/white"
                         android:background="@drawable/edittext_border"
                         android:ems="7"
-                        android:inputType="textPersonName"
+                        android:inputType="textPersonName|textCapWords"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="1dp"
                         android:paddingLeft="5dp"/>
@@ -131,7 +131,7 @@
                 android:textColor="@color/white"
                 android:ems="14"
                 android:paddingLeft="3dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress|textCapSentences" />
             <EditText
                 android:id="@+id/field_email_confirm"
                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                 android:textColor="@color/white"
                 android:ems="14"
                 android:paddingLeft="5dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress|textCapSentences" />
             <EditText
                 android:id="@+id/field_password"
                 android:layout_width="wrap_content"
@@ -224,6 +224,7 @@
             </LinearLayout>
 
             <CheckBox
+                android:id="@+id/checkbox_tac"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

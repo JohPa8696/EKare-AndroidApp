@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class contactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity {
 
     private FloatingActionButton addContact;
     private FirebaseAuth mAuth;
@@ -50,7 +50,7 @@ public class contactActivity extends AppCompatActivity {
         mRequests = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("requests");
         mUser = mDatabase.child("users").child(mAuth.getCurrentUser().getUid());
 
-        mContext = contactActivity.this;
+        mContext = ContactActivity.this;
 
         populateRequestList();
 

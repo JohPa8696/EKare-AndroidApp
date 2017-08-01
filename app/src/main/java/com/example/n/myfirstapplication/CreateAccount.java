@@ -1,13 +1,19 @@
 package com.example.n.myfirstapplication;
 
 import android.content.Intent;
+import android.media.Image;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.n.myfirstapplication.dto.User;
@@ -22,8 +28,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
+import java.util.EventListener;
 
-public class CreateAccount extends AppCompatActivity {
+public class CreateAccount extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -32,10 +39,20 @@ public class CreateAccount extends AppCompatActivity {
     private EditText mEmailField;
     private EditText mPhoneField;
     private EditText mPasswordField;
-
     private Button cancel;
     private Button create;
 
+    private ImageButton mChooseFromGalleryIBtn;
+    private ImageButton mTakePictureIBtn;
+    private ImageView mProfilePicture;
+
+    private EditText mLastNameField;
+    private EditText mEmailConfirmField;
+    private EditText mPasswordConfirmField;
+
+    private Spinner mGendersSpinner;
+    private Spinner mRolesSpinner;
+    private CheckBox mTermsContidionsCb;
     private Intent previousInt;
 
     @Override
@@ -43,31 +60,33 @@ public class CreateAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+        // Get firebase references
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        // Get UI components
+        mTakePictureIBtn = (ImageButton) findViewById(R.id.signup_take_pic);
+        mChooseFromGalleryIBtn = (ImageButton) findViewById(R.id.signup_choose_pic);
+        mProfilePicture = (ImageView) findViewById(R.id.signup_profile_pic);
         mNameField = (EditText) findViewById(R.id.field_name);
+        mLastNameField = (EditText) findViewById(R.id.field_lastname);
         mEmailField = (EditText) findViewById(R.id.field_email);
+        mEmailConfirmField = (EditText) findViewById(R.id.field_email_confirm);
         mPhoneField = (EditText) findViewById(R.id.field_phone);
         mPasswordField = (EditText) findViewById(R.id.field_password);
+        mPasswordConfirmField =(EditText) findViewById(R.id.field_password_confirm);
+        mGendersSpinner = (Spinner) findViewById(R.id.spinner_genders);
+        mRolesSpinner =(Spinner) findViewById(R.id.spinner_role);
+        mTermsContidionsCb =(CheckBox) findViewById(R.id.checkbox_tac);
 
+        // Add event listeners for buttons and imagebuttons
+        mChooseFromGalleryIBtn.setOnClickListener(this);
+        mTakePictureIBtn.setOnClickListener(this);
         create = (Button) findViewById(R.id.createBtn);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createAccount(mEmailField.getText().toString(),
-                        mPasswordField.getText().toString());
-            }
-        });
+        create.setOnClickListener(this);
 
         cancel = (Button) findViewById(R.id.cancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(previousInt);
-            }
-        });
-
+        cancel.setOnClickListener(this);
         previousInt = new Intent(this, Authentication.class);
     }
 
@@ -78,6 +97,28 @@ public class CreateAccount extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.createBtn:
+                createAccount(mEmailField.getText().toString(),
+                        mPasswordField.getText().toString());
+                break;
+            case R.id.cancelBtn:
+                startActivity(previousInt);
+                break;
+            case R.id.signup_choose_pic:
+                Toast.makeText(this,"Choose pic",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.signup_take_pic:
+                Toast.makeText(this,"take pic",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                //startActivity(intent,);
+                break;
+
+        }
     }
 
     private void updateUI(FirebaseUser currentUser) {
@@ -187,4 +228,5 @@ public class CreateAccount extends AppCompatActivity {
 
         mDatabase.child("users").child(userId).setValue(newUser);
     }
+
 }
