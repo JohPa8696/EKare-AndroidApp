@@ -5,8 +5,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -36,7 +39,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.EventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,6 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CreateAccount extends AppCompatActivity implements View.OnClickListener{
 
     static final int REQUEST_IMAGE_CAPTURE = 1123;
+    static final int REQUEST_GALLARY = 3221;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -124,18 +131,25 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                 startActivity(previousInt);
                 break;
             case R.id.signup_choose_pic:
-                Toast.makeText(this,"Choose pic",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Pick a picture in gallery",Toast.LENGTH_SHORT).show();
+                if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                    openImageGallery();
+                }else{
+                    String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    requestPermissions(permissions,REQUEST_GALLARY);
+                }
                 break;
             case R.id.signup_take_pic:
-                Toast.makeText(this,"take pic",Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(this,"Take a profile picture",Toast.LENGTH_SHORT).show();
                 if(checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED ){
                     openCamera();
                 } else {
                     String[] permissions ={Manifest.permission.CAMERA};
                     requestPermissions(permissions,REQUEST_IMAGE_CAPTURE);
                 }
-
+                break;
+            default:
+                break;
         }
     }
 
@@ -147,28 +161,59 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             Bundle extras = data.getExtras();
             Bitmap picture = (Bitmap) extras.get("data");
             mProfilePicture.setImageBitmap(picture);
+        }else if(requestCode == REQUEST_GALLARY && resultCode ==RESULT_OK){
+            // This is the address of the image on the SD card
+            Uri imageUri = data.getData();
+
+            // Read the stream of data from SD card
+            InputStream inputStream;
+            try {
+                inputStream = getContentResolver().openInputStream(imageUri);
+
+                // Get bitmap from the stream
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                mProfilePicture.setImageBitmap(bitmap);
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+                Toast.makeText(this,"Cannot find image",Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_IMAGE_CAPTURE: {
+            case REQUEST_IMAGE_CAPTURE:
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 }else{
-                    Toast.makeText(this,"Cannot ask for permission",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Request camera permission failed!",Toast.LENGTH_SHORT).show();
                 }
                 return;
-            }
+            case REQUEST_GALLARY:
+                if(grantResults.length > 0 && grantResults [0] == PackageManager.PERMISSION_GRANTED ){
+                    openImageGallery();
+                }else{
+                    Toast.makeText(this,"Request gallery permission failed!",Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
     private void openCamera(){
         Intent takePictureIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
+    }
+    private void openImageGallery(){
+        Intent pickImageIntent = new Intent(Intent.ACTION_PICK);
+
+        File imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String picDirPath = imageDir.getPath();
+        Uri data =Uri.parse(picDirPath);
+        pickImageIntent.setDataAndType(data,"image/*");
+        startActivityForResult(pickImageIntent,REQUEST_GALLARY);
     }
 
     private void updateUI(FirebaseUser currentUser) {
