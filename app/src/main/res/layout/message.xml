@@ -2,54 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!--Profile picture takes 10% of the screen-->
+    <RelativeLayout
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:id="@+id/profilepicmessage_tv"
-        android:layout_marginLeft="5dp"
-        android:text="TOM"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="#41423f"
-        android:layout_weight="0.05"/>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
-        <ImageView
-            android:id="@+id/accidentscene"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginBottom="1dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginTop="2dp"
-            android:adjustViewBounds="true" />
+        android:layout_weight="0.15">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/message_tv"
-            android:text="helo how are you asdf asdf as dfasd asdfas asdf sad fasdfasdf asdfasdfasdfa sdfa sdfas asdfasdf asdfa"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="2dp"
-            android:textColor="#000000"
-            android:background="@drawable/chat_bubble"
-            android:textSize="19dp"
-            android:maxWidth="300dp"/>
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/timestamp_tv"
-        android:layout_width="wrap_content"
+            android:id="@+id/profilepicmessage_tv"
+            android:layout_marginLeft="5dp"
+            android:text="TOM"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#41423f"
+            android:background="@color/test1" />
+    </RelativeLayout>
+    <!--The message,image and time take total 90% of the screen-->
+    <RelativeLayout
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:text="10:30 PM"
-        android:textColor="#a9aaa5"
-        android:textSize="14dp" />
+        android:layout_weight="0.85">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <ImageView
+                android:id="@+id/accidentscene"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:adjustViewBounds="true" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".75">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/message_tv"
+                        android:text="helo how are you asdf asdf as dfasd asdfas asdf sad fasdfasdf asdfasdfasdfa sdfa sdfas asdfasdf asdfa"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:textColor="#000000"
+                        android:background="@drawable/chatbubble"
+                        android:textSize="15dp"
+                        android:maxWidth="300dp"
+                        android:layout_alignParentLeft="true" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.25">
+                    <TextView
+                        android:id="@+id/timestamp_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10:30 PM"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_alignParentRight="true"
+                        android:textColor="#a9aaa5"
+                        android:textSize="12dp"
+                        android:layout_alignParentBottom="true"
+                        android:textAlignment="gravity"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.bumptech.glide.Glide;
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -59,6 +60,15 @@ public class MessageAdapter extends BaseAdapter {
         ImageView image = (ImageView) v.findViewById(R.id.accidentscene);
         String uri= messages.get(i).getImageURL();
 
+        // Set customer fonts for the textview components
+        Typeface robotoLightFont = Typeface.createFromAsset(context.getAssets(),"font/robotolight.ttf");
+        Typeface robotoRegularFont = Typeface.createFromAsset(context.getAssets(),"font/robotoregular.ttf");
+        Typeface robotoThinFont = Typeface.createFromAsset(context.getAssets(),"font/robotothin.ttf");
+
+        messageBody.setTypeface(robotoLightFont);
+        timestamp.setTypeface(robotoThinFont);
+        sender.setTypeface(robotoRegularFont);
+
         if(!uri.equals("")){
             StorageReference imageRef = storageReference.child("image").child(uri);
             image.getLayoutParams().height=500;
@@ -71,7 +81,9 @@ public class MessageAdapter extends BaseAdapter {
         }
         //Download the image, take alot of time
         sender.setText(messages.get(i).getSender());
-        messageBody.setText(messages.get(i).getMessage());
+        if(!messages.get(i).getMessage().trim().equals("")) {
+            messageBody.setText(messages.get(i).getMessage());
+        }
         timestamp.setText(messages.get(i).getTime());
         return v;
     }
