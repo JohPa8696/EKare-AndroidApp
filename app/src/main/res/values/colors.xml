@@ -3,4 +3,11 @@
     <color name="colorPrimary">#303030</color>
     <color name="colorPrimaryDark">#0F0F0F</color>
     <color name="colorAccent">#303030</color>
+    <color name="test1">#4286f4</color>
+    <color name="login_photo_background">#80ffff</color>
+    <!--Login screen-->
+    <color name="white">#ffffff</color>
+    <color name="signupButton">#33cc33</color>
+    <color name="loginButton"> #7171da</color>
+    <color name="cbgray" >#a6a6a6</color>
 </resources>

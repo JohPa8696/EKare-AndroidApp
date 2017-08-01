@@ -1,4 +1,4 @@
-package com.example.n.myfirstapplication.ui.adapter;
+package com.example.n.myfirstapplication.ui.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.dto.MessageLog;
 import com.example.n.myfirstapplication.R;
 

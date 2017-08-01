@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.n.myfirstapplication.dto.Contact;
-import com.example.n.myfirstapplication.ui.adapter.ContactAdapter;
+import com.example.n.myfirstapplication.ui.adapters.ContactAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
