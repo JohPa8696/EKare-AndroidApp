@@ -36,7 +36,8 @@ public class ImageRounder extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawOval(mRectF, mPaint);
+        //canvas.drawOval(mRectF, mPaint);
+        canvas.drawCircle(50,100,100,mPaint);
     }
 
     @Override

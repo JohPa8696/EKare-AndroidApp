@@ -1,9 +1,17 @@
 package com.example.n.myfirstapplication;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.Image;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.n.myfirstapplication.dto.User;
+import com.example.n.myfirstapplication.untilities.ImageRounder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,8 +39,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.io.IOException;
 import java.util.EventListener;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CreateAccount extends AppCompatActivity implements View.OnClickListener{
 
+    static final int REQUEST_IMAGE_CAPTURE = 1123;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -44,7 +56,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
     private ImageButton mChooseFromGalleryIBtn;
     private ImageButton mTakePictureIBtn;
-    private ImageView mProfilePicture;
+    private CircleImageView mProfilePicture;
 
     private EditText mLastNameField;
     private EditText mEmailConfirmField;
@@ -55,6 +67,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     private CheckBox mTermsContidionsCb;
     private Intent previousInt;
 
+    private ImageRounder imageRounder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +80,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         // Get UI components
         mTakePictureIBtn = (ImageButton) findViewById(R.id.signup_take_pic);
         mChooseFromGalleryIBtn = (ImageButton) findViewById(R.id.signup_choose_pic);
-        mProfilePicture = (ImageView) findViewById(R.id.signup_profile_pic);
+        mProfilePicture = (CircleImageView) findViewById(R.id.signup_profile_pic);
         mNameField = (EditText) findViewById(R.id.field_name);
         mLastNameField = (EditText) findViewById(R.id.field_lastname);
         mEmailField = (EditText) findViewById(R.id.field_email);
@@ -99,6 +112,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         updateUI(currentUser);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -114,11 +128,47 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.signup_take_pic:
                 Toast.makeText(this,"take pic",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                //startActivity(intent,);
-                break;
+
+                if(checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED ){
+                    openCamera();
+                } else {
+                    String[] permissions ={Manifest.permission.CAMERA};
+                    requestPermissions(permissions,REQUEST_IMAGE_CAPTURE);
+                }
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap picture = (Bitmap) extras.get("data");
+            mProfilePicture.setImageBitmap(picture);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_IMAGE_CAPTURE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                }else{
+                    Toast.makeText(this,"Cannot ask for permission",Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void openCamera(){
+        Intent takePictureIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
     }
 
     private void updateUI(FirebaseUser currentUser) {

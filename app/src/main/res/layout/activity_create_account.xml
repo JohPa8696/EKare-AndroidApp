@@ -14,14 +14,14 @@
             android:layout_height="125dp"
             android:orientation="vertical"
             android:background="@color/login_photo_background">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/signup_profile_pic"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/default_profilepic">
-            </ImageView>
+            </de.hdodenhof.circleimageview.CircleImageView>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
