@@ -124,7 +124,7 @@ public class Authentication extends AppCompatActivity {
                             Log.d("TOKEN", FirebaseInstanceId.getInstance().getToken());
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, display a message_receiver.xml to the user.
                             //Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Authentication.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

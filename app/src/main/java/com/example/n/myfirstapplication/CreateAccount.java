@@ -266,7 +266,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, display a message_receiver.xml to the user.
                             //Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(CreateAccount.this, task.getException().getCause().toString(),
                                     Toast.LENGTH_SHORT).show();

@@ -265,7 +265,7 @@ public class ContactAdapter  extends BaseAdapter{
                             mUser.child("contacts").child(key).setValue(otherContact);
                             mDatabase.child("users").child(otherKey).child("contacts").child(key).setValue(currentContact);
 
-                            // create message log between users
+                            // create message_receiver.xml log between users
                             mDatabase.child("message_log").child(key).child("user1").setValue(otherContact.getEmail());
                             mDatabase.child("message_log").child(key).child("user2").setValue(currentContact.getEmail());
 

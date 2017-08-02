@@ -47,7 +47,7 @@ public class MessageScreenActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_screen);
 
-        // Extract message log id
+        // Extract message_receiver.xml log id
         Bundle mlID = getIntent().getExtras();
 
         messageLogID= mlID.get("id").toString();
@@ -79,7 +79,7 @@ public class MessageScreenActivity extends AppCompatActivity{
                 }
                 messageAdapter = new MessageAdapter(getApplicationContext(),messages);
                 messagesLv.setAdapter(messageAdapter);
-                // Manually set the scroll to the bottom of the message log
+                // Manually set the scroll to the bottom of the message_receiver.xml log
                 messagesLv.setSelection(messageAdapter.getCount()-1);
             }
 
@@ -134,6 +134,7 @@ public class MessageScreenActivity extends AppCompatActivity{
 
             }
         });
+
         // Get the phone number of the contact
         DatabaseReference usersReference = mdbReference.child("users");
         usersReference.addListenerForSingleValueEvent(new ValueEventListener() {

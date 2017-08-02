@@ -70,7 +70,6 @@ public class MessageLogsActivity extends AppCompatActivity {
                             new MessageLog(messageLogId, contact.getName(),contact.getLastMessage(),contact.getDate()));
 
                 }
-                //initiateAdapter();
             }
 
             @Override
@@ -79,6 +78,7 @@ public class MessageLogsActivity extends AppCompatActivity {
             }
         });
 
+        // Get contact profile Uri
         mUsersRef = mDatabaseRef.child("users");
         mUsersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,7 +90,7 @@ public class MessageLogsActivity extends AppCompatActivity {
                     }
                 }
 
-                // Pass the list of message log to the adapter
+                // Pass the list of message_receiver.xml log to the adapter
                 adapter = new MessageLogListAdapter(getApplicationContext(), new ArrayList<MessageLog>(messageLogList.values()));
                 messageLogsLv.setAdapter(adapter);
 
@@ -120,43 +120,43 @@ public class MessageLogsActivity extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * THis function get the profile image Uri for each of the contacts and pass it to the adapter
-     */
-    private void initiateAdapter(){
-        DatabaseReference usersRef = mDatabaseRef.child("users");
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot child : dataSnapshot.getChildren()){
-                    User user = child.getValue(User.class);
-                    if(messageLogList.get(user.getEmail().trim())!= null){
-                        messageLogList.get(user.getEmail().trim()).setProfileUri(user.getProfilePicUri());
-                    }
-                }
-
-                // Pass the list of message log to the adapter
-                adapter = new MessageLogListAdapter(getApplicationContext(), (ArrayList<MessageLog>) messageLogList.values());
-                messageLogsLv.setAdapter(adapter);
-
-                messageLogsLv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id",view.getTag().toString());
-                        bundle.putString("title",((MessageLog)adapter.getItem(i)).getUserName());
-                        messagesScreen.putExtras(bundle);
-                        startActivity(messagesScreen);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//
+//    /**
+//     * THis function get the profile image Uri for each of the contacts and pass it to the adapter
+//     */
+//    private void initiateAdapter(){
+//        DatabaseReference usersRef = mDatabaseRef.child("users");
+//        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot child : dataSnapshot.getChildren()){
+//                    User user = child.getValue(User.class);
+//                    if(messageLogList.get(user.getEmail().trim())!= null){
+//                        messageLogList.get(user.getEmail().trim()).setProfileUri(user.getProfilePicUri());
+//                    }
+//                }
+//
+//                // Pass the list of message_receiver.xml log to the adapter
+//                adapter = new MessageLogListAdapter(getApplicationContext(), (ArrayList<MessageLog>) messageLogList.values());
+//                messageLogsLv.setAdapter(adapter);
+//
+//                messageLogsLv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("id",view.getTag().toString());
+//                        bundle.putString("title",((MessageLog)adapter.getItem(i)).getUserName());
+//                        messagesScreen.putExtras(bundle);
+//                        startActivity(messagesScreen);
+//                    }
+//                });
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 }
