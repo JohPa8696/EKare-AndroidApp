@@ -7,6 +7,7 @@ package com.example.n.myfirstapplication.dto;
 public class MessageLog {
 
     private String messageLogId;
+    private String profileUri;
     private String userName;
     private String lastMessage;
     private String timeStamp;
@@ -50,4 +51,13 @@ public class MessageLog {
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
+    }
+
 }

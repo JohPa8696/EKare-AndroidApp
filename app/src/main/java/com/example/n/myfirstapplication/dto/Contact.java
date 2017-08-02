@@ -18,6 +18,7 @@ public class Contact {
     public String date ="";
     public String deviceToken;
 
+
     public Contact(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }

@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="2dp"
                 android:fadingEdge="horizontal|vertical"
-                android:text="Kinef"
+                android:text="Kinect System"
                 android:textColor="@color/white"
                 android:textSize="22dp" />
 
