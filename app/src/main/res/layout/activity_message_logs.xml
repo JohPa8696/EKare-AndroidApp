@@ -12,7 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/messagelogs_listview"
+        android:divider="@null"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
-
+    <TextView
+        android:id="@+id/noConvo_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/cbgray"
+        android:text="0 conversation">
+    </TextView>
 </LinearLayout>

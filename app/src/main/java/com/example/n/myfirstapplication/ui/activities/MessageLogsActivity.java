@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.dto.MessageLog;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +35,7 @@ public class MessageLogsActivity extends AppCompatActivity {
     private DatabaseReference mContactsRef;
     private DatabaseReference mUsersRef;
     private FirebaseAuth userAuth;
-
+    private TextView numConversations;
     private HashMap<String,MessageLog> messageLogList;
     private Intent messagesScreen;
     @Override
@@ -43,9 +46,10 @@ public class MessageLogsActivity extends AppCompatActivity {
         messagesScreen = new Intent(this, MessageScreenActivity.class);
         messageLogsLv = (ListView) findViewById(R.id.messagelogs_listview);
         messageLogList= new HashMap<>();
-        //TODO get the list of contacts from database
-        userAuth = FirebaseAuth.getInstance();
 
+        numConversations = (TextView) findViewById(R.id.noConvo_tv);
+        // Get users contact from databse and store locally in a hashmap
+        userAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseRef = mDatabase.getReference();
         mContactsRef= mDatabaseRef.child("users").child(userAuth.getCurrentUser().getUid()).child("contacts");
@@ -89,6 +93,13 @@ public class MessageLogsActivity extends AppCompatActivity {
                 // Pass the list of message log to the adapter
                 adapter = new MessageLogListAdapter(getApplicationContext(), new ArrayList<MessageLog>(messageLogList.values()));
                 messageLogsLv.setAdapter(adapter);
+
+                //set text view
+                if(messageLogList.keySet().size() >1){
+                    numConversations.setText(messageLogList.keySet().size() +" conversations");
+                }else{
+                    numConversations.setText(messageLogList.keySet().size() +" conversation");
+                }
 
                 messageLogsLv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
                     @Override
