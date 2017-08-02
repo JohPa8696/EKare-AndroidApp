@@ -52,6 +52,7 @@ public class MessageAdapter extends BaseAdapter {
         userRef = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(user.getCurrentUser().getUid());
 
+
 //        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
@@ -110,12 +111,24 @@ public class MessageAdapter extends BaseAdapter {
 
         // Set customer fonts for the textview components
         Typeface robotoLightFont = Typeface.createFromAsset(context.getAssets(),"font/robotolight.ttf");
-        Typeface robotoRegularFont = Typeface.createFromAsset(context.getAssets(),"font/robotoregular.ttf");
+        //Typeface robotoRegularFont = Typeface.createFromAsset(context.getAssets(),"font/robotoregular.ttf");
         Typeface robotoThinFont = Typeface.createFromAsset(context.getAssets(),"font/robotothin.ttf");
 
         messageBody.setTypeface(robotoLightFont);
         timestamp.setTypeface(robotoThinFont);
-        //sender.setTypeface(robotoRegularFont);
+
+        // GetProfile picture for user,
+//        String profilePicUri ="1501160313943.png";
+//        if(!profilePicUri.equals("default_profilepic.png")){
+//            StorageReference profilePicRef = storageReference.child("profile_pictures").child(profilePicUri);
+////            profilePic.getLayoutParams().height=500;
+////            profilePic.getLayoutParams().width=600;
+//            // Load the image using Glide
+//            Glide.with(context)
+//                    .using(new FirebaseImageLoader())
+//                    .load(profilePicRef)
+//                    .into(profilePic);
+//        }
 
         if(!uri.equals("")){
             StorageReference imageRef = storageReference.child("image").child(uri);
@@ -127,8 +140,6 @@ public class MessageAdapter extends BaseAdapter {
                     .load(imageRef)
                     .into(image);
         }
-        //Download the image, take alot of time
-        //sender.setText(messages.get(i).getSender());
         if(!messages.get(i).getMessage().trim().equals("")) {
             messageBody.setText(messages.get(i).getMessage());
         }
