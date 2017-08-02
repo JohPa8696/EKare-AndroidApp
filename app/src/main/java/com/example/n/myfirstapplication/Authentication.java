@@ -1,6 +1,7 @@
 package com.example.n.myfirstapplication;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -34,6 +38,7 @@ public class Authentication extends AppCompatActivity {
     private Button login;
     private Intent createAccountInt;
 
+    private TextView logoName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +68,9 @@ public class Authentication extends AppCompatActivity {
             }
         });
 
+        logoName = (TextView) findViewById(R.id.logoname_tv);
+        Typeface logoFont = Typeface.createFromAsset(this.getAssets(),"font/bungeeregular.ttf");
+        logoName.setTypeface(logoFont);
         //Todo remove sign out user on start (for testing)
         //FirebaseAuth.getInstance().signOut();
     }
