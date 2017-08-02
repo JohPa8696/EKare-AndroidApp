@@ -15,6 +15,9 @@ public class User {
     public String name;
     public String email;
     public String phone;
+    private String gender;
+    private String role;
+    private String profilePicUri;
     public List<Message> messagesReceived;
     public HashMap<String,Contact> contacts;
     public HashMap<String,Contact> requests;
@@ -24,10 +27,14 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String name, String email, String phone){
+    public User(String name, String email, String phone, String gender, String role,String Uri){
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.gender =gender;
+        this.role= role;
+        this.profilePicUri = Uri;
+
     }
 
     public String getName() {
@@ -52,6 +59,30 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getProfilePicUri() {
+        return profilePicUri;
+    }
+
+    public void setProfilePicUri(String profilePicUri) {
+        this.profilePicUri = profilePicUri;
     }
 
     public List<Message> getMessagesReceived() {

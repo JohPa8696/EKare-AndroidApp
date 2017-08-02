@@ -20,6 +20,7 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
+                android:tag="default"
                 android:src="@drawable/default_profilepic">
             </de.hdodenhof.circleimageview.CircleImageView>
             <LinearLayout
@@ -86,7 +87,7 @@
                         android:hint=" First Name"
                         android:textSize="18dp"
                         android:textColorHint="@color/white"
-                        android:textColor="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:background="@drawable/edittext_border"
                         android:ems="7"
                         android:inputType="textPersonName|textCapWords"
@@ -108,7 +109,7 @@
                         android:hint=" Last Name"
                         android:textSize="18dp"
                         android:textColorHint="@color/white"
-                        android:textColor="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:background="@drawable/edittext_border"
                         android:ems="7"
                         android:inputType="textPersonName|textCapWords"
@@ -128,7 +129,7 @@
                 android:layout_marginBottom="10dp"
                 android:hint=" Email"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:ems="14"
                 android:paddingLeft="3dp"
                 android:inputType="textEmailAddress|textCapSentences" />
@@ -142,7 +143,7 @@
                 android:layout_marginBottom="10dp"
                 android:hint=" Email Confirm"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:ems="14"
                 android:paddingLeft="5dp"
                 android:inputType="textEmailAddress|textCapSentences" />
@@ -156,7 +157,7 @@
                 android:layout_marginBottom="10dp"
                 android:hint=" Password"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:ems="14"
                 android:paddingLeft="5dp"
                 android:inputType="textPassword" />
@@ -171,7 +172,7 @@
                 android:layout_marginBottom="10dp"
                 android:hint=" Password Confirm"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:ems="14"
                 android:paddingLeft="5dp"
                 android:inputType="textPassword" />
@@ -186,7 +187,7 @@
                 android:layout_marginBottom="10dp"
                 android:hint=" Phone Number"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:ems="14"
                 android:paddingLeft="5dp"
                 android:inputType="phone"/>
