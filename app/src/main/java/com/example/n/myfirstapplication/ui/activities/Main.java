@@ -5,7 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.n.myfirstapplication.ContactActivity;
 import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.ui.adapters.SectionsPageAdapter;
 import com.google.firebase.auth.FirebaseAuth;

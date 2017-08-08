@@ -1,4 +1,4 @@
-package com.example.n.myfirstapplication;
+package com.example.n.myfirstapplication.ui.activities;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.n.myfirstapplication.AddContactDialogFragment;
+import com.example.n.myfirstapplication.ItemInListView;
+import com.example.n.myfirstapplication.ItemSeperator;
+import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.ui.adapters.ContactAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -142,105 +146,6 @@ public class ContactActivity extends Fragment {
         });
         return view;
     }
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_contact);
-
-//        mAuth = FirebaseAuth.getInstance();
-//        mDatabase = FirebaseDatabase.getInstance().getReference();
-//        mContacts = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("contacts");
-//        mRequests = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("requests");
-//        mUser = mDatabase.child("users").child(mAuth.getCurrentUser().getUid());
-//
-//        mContext = ContactActivity.this;
-//
-//        populateRequestList();
-//
-//        mContacts.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // update list view
-//                if(dataSnapshot.exists()) {
-//                    userContacts.clear();
-//                    userContacts.add(new ItemSeperator("Contacts"));
-//
-//                    ArrayList<ItemInListView> tmpList = new ArrayList<>();
-//
-//                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                        Contact tmpUser = ds.getValue(Contact.class);
-//                        tmpList.add(new ItemInListView(tmpUser.getName(),tmpUser.getEmail(),
-//                                tmpUser.isMessagePermission(), tmpUser.isImagePermission()));
-//                    }
-//
-//                    Collections.sort(tmpList, new Comparator<ItemInListView>() {
-//                        @Override
-//                        public int compare(ItemInListView o1, ItemInListView o2) {
-//                            return o1.getName().compareTo(o2.getName());
-//                        }
-//                    });
-//
-//                    userContacts.addAll(tmpList);
-//                    updateRequestList();
-//                }else{
-//                    userContacts.clear();
-//                    updateRequestList();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//
-//        mRequests.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // update list view
-//                if(dataSnapshot.exists()){
-//                    userRequests.clear();
-//                    userRequests.add(new ItemSeperator("Requests"));
-//
-//                    ArrayList<ItemInListView> tmpList = new ArrayList<>();
-//
-//                    for (DataSnapshot ds: dataSnapshot.getChildren()){
-//                        Contact tmpUser = ds.getValue(Contact.class);
-//                        tmpList.add(new ItemInListView(tmpUser.getName(),tmpUser.getEmail(),1));
-//                    }
-//
-//                    Collections.sort(tmpList, new Comparator<ItemInListView>() {
-//                        @Override
-//                        public int compare(ItemInListView o1, ItemInListView o2) {
-//                            return o1.getName().compareTo(o2.getName());
-//                        }
-//                    });
-//
-//                    userRequests.addAll(tmpList);
-//                    updateRequestList();
-//                }else{
-//                    userRequests.clear();
-//                    updateRequestList();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        addContact = (FloatingActionButton) findViewById(R.id.addContactBtn);
-//        addContact.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            showAddContactDialog();
-//            }
-//        });
-//    }
-//
 
     public void showAddContactDialog(){
         DialogFragment dialog = new AddContactDialogFragment();
