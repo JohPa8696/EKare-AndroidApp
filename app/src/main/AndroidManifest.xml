@@ -22,14 +22,26 @@
         <activity android:name=".Authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".CreateAccount" />
-
-        <activity android:name=".Profile">
-        </activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".NavigationActivity" />
+        <activity android:name=".ContactActivity" />
+        <activity android:name=".ui.activities.MessageLogsActivity" />
+        <activity android:name=".ui.activities.MessageScreenActivity"></activity>
     </application>
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"  android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    ...
+    <!-- Needed only for Android 5.0 (API level 21) or higher. -->
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

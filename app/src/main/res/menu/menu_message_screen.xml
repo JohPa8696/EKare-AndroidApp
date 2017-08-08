@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app= "http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.n.myfirstapplication.ui.activities.MessageScreenActivity">
+
+    <item
+        android:id="@+id/call_person"
+        android:icon="@mipmap/ic_ohone1"
+        android:title="@string/call_person"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/call_emergency"
+        android:icon="@mipmap/ic_ambunance"
+        android:title="@string/call_emergency_service"
+        app:showAsAction="always" />
+</menu>

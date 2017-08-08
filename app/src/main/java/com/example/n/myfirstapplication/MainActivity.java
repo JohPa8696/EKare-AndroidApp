@@ -19,13 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.n.myfirstapplication.dto.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -33,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private DatabaseReference mUser;
+    private DatabaseReference mMesaages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mUser = mDatabase.child("users").child(mAuth.getCurrentUser().getUid());
+        mMesaages = mUser.child("messagesReceived");
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,11 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
-
-
-        FirebaseMessaging.getInstance().subscribeToTopic("all");
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 printUserInfo(dataSnapshot);
@@ -71,6 +70,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mMesaages.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void onButtonTap(View v){
@@ -112,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            addToScrollView(intent.getStringExtra("message"));
+            addToScrollView(intent.getStringExtra("message_receiver.xml"));
         }
     };
 
@@ -150,13 +160,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void printUserInfo(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            User userInfo = ds.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
-            String message = "Name: " + userInfo.getName() + "\n"
-                    + "E-mail: " + userInfo.getEmail() + "\n"
-                    + "Phone: " + userInfo.getPhone();
-            addToScrollView(message);
-        }
+        User userInfo = dataSnapshot.getValue(User.class);
+        String message = "Name: " + userInfo.getName() + "\n"
+                + "E-mail: " + userInfo.getEmail() + "\n"
+                + "Phone: " + userInfo.getPhone();
+        addToScrollView(message);
 
         Log.d("DataBase", "reading from database");
     }

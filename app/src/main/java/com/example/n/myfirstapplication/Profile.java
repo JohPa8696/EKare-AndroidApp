@@ -2,9 +2,9 @@ package com.example.n.myfirstapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
+import com.example.n.myfirstapplication.dto.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +29,8 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").
+                child(mAuth.getCurrentUser().getUid());
 
         name = (TextView) findViewById(R.id.textName);
         email = (TextView) findViewById(R.id.textEmail);
@@ -49,11 +50,9 @@ public class Profile extends AppCompatActivity {
     }
 
     private void printUserInfo(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            User userInfo = ds.child(mAuth.getCurrentUser().getUid()).getValue(User.class);
-            name.setText(userInfo.getName());
-            email.setText(userInfo.getEmail());
-            phone.setText(userInfo.getPhone());
-        }
+        User userInfo = dataSnapshot.getValue(User.class);
+        name.setText(userInfo.getName());
+        email.setText(userInfo.getEmail());
+        phone.setText(userInfo.getPhone());
     }
 }
