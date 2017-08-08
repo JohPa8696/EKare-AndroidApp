@@ -52,22 +52,22 @@ public class MessageAdapter extends BaseAdapter {
         userRef = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(user.getCurrentUser().getUid());
 
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
 
-//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot child : dataSnapshot.getChildren()){
-//                    if(child.getKey().equals("name")) {
-//                        userName = child.getValue().toString();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    if(child.getKey().equals("name")) {
+                        userName = child.getValue().toString();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.n.myfirstapplication.ui.activities.Main;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -86,7 +87,8 @@ public class Authentication extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null){
-            Intent myintent = new Intent(this, NavigationActivity.class);
+//            Intent myintent = new Intent(this, NavigationActivity.class);
+            Intent myintent = new Intent(this, Main.class);
             startActivity(myintent);
         }else{
 
@@ -126,7 +128,7 @@ public class Authentication extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message_receiver.xml to the user.
                             //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(Authentication.this, "Authentication failed.",
+                            Toast.makeText(Authentication.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
