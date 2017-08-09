@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -95,6 +97,9 @@ public class MessageLogsActivity extends Fragment {
                     }
                 }
 
+                //Sort the list in order
+                List<MessageLog> list = new ArrayList<MessageLog>(messageLogList.values());
+                Collections.sort(list);
                 // Pass the list of message_receiver.xml log to the adapter
                 adapter = new MessageLogListAdapter(getActivity().getApplicationContext(), new ArrayList<MessageLog>(messageLogList.values()));
                 messageLogsLv.setAdapter(adapter);

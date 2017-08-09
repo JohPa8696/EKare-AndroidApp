@@ -1,10 +1,17 @@
 package com.example.n.myfirstapplication.dto;
 
+import android.support.annotation.NonNull;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by johnn on 7/15/2017.
  */
 
-public class MessageLog {
+public class MessageLog implements Comparable {
 
     private String messageLogId;
     private String profileUri;
@@ -60,4 +67,19 @@ public class MessageLog {
         this.profileUri = profileUri;
     }
 
+    @Override
+    public int compareTo(@NonNull Object o) {
+        MessageLog otherLog= (MessageLog) o;
+        DateFormat format = new SimpleDateFormat("MMM dd");
+
+        Date otherDate = null;
+        Date thisDate = null;
+        try {
+            otherDate = format.parse(otherLog.getTimeStamp());
+            thisDate = format.parse(this.timeStamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return otherDate.compareTo(thisDate)  ;
+    }
 }

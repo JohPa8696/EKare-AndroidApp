@@ -1,15 +1,22 @@
 package com.example.n.myfirstapplication.dto;
 
+import android.support.annotation.NonNull;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by n on 18/07/2017.
  */
 
 @IgnoreExtraProperties
-public class Contact {
+public class Contact implements Comparable {
     public String name;
     public String email;
     public boolean messagePermission;
@@ -114,5 +121,22 @@ public class Contact {
     @Override
     public int hashCode(){
         return Objects.hash(email);
+    }
+
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        Contact otherContact= (Contact) o;
+        DateFormat format = new SimpleDateFormat("MMM dd");
+
+        Date otherDate = null;
+        Date thisDate = null;
+        try {
+            otherDate = format.parse(otherContact.getDate());
+            thisDate = format.parse(this.date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return otherDate.compareTo(thisDate)  ;
     }
 }

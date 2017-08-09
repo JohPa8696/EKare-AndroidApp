@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.example.n.myfirstapplication.dto.User;
+import com.example.n.myfirstapplication.ui.activities.Main;
 import com.example.n.myfirstapplication.untilities.ImageRounder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -230,7 +231,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             Toast.makeText(CreateAccount.this, "Authentication Success.",
                     Toast.LENGTH_SHORT).show();
 
-            Intent myintent = new Intent(this, NavigationActivity.class);
+            Intent myintent = new Intent(this, Main.class);
             startActivity(myintent);
         }else{
 
