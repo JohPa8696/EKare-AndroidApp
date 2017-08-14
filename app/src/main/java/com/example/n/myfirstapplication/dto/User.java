@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * This class represents users.
  * Created by n on 2/07/2017.
  */
 

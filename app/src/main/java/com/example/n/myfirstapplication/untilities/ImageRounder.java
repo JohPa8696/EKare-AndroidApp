@@ -12,7 +12,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 
 /**
- *
+ * ImageRounder class creates round profile images
  */
 public class ImageRounder extends Drawable {
     private final Bitmap mBitmap;

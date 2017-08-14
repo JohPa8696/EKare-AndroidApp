@@ -48,15 +48,17 @@ public class MessageLogsActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate new screen using message log layout
         View view = inflater.inflate(R.layout.activity_message_logs,container,false);
+
         // Set the title
-        getActivity().setTitle("Conversations");
+        getActivity().setTitle("Notifications");
         messagesScreen = new Intent(getActivity(), MessageScreenActivity.class);
         messageLogsLv = (ListView) view.findViewById(R.id.messagelogs_listview);
         messageLogList= new HashMap<>();
-
         numConversations = (TextView) view.findViewById(R.id.noConvo_tv);
-        // Get users contact from databse and store locally in a hashmap
+
+        // Getting Firebase references
         userAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseRef = mDatabase.getReference();
@@ -97,20 +99,21 @@ public class MessageLogsActivity extends Fragment {
                     }
                 }
 
-                //Sort the list in order
+                // Sort the list in order
                 List<MessageLog> list = new ArrayList<MessageLog>(messageLogList.values());
                 Collections.sort(list);
                 // Pass the list of message_receiver.xml log to the adapter
                 adapter = new MessageLogListAdapter(getActivity().getApplicationContext(), new ArrayList<MessageLog>(messageLogList.values()));
                 messageLogsLv.setAdapter(adapter);
 
-                //set text view
+                // Set text view
                 if(messageLogList.keySet().size() >1){
                     numConversations.setText(messageLogList.keySet().size() +" conversations");
                 }else{
                     numConversations.setText(messageLogList.keySet().size() +" conversation");
                 }
 
+                // Add listeners to each contact item, open the notification history when clicked
                 messageLogsLv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -129,9 +132,6 @@ public class MessageLogsActivity extends Fragment {
 
             }
         });
-
-
-
 
         return view;
     }

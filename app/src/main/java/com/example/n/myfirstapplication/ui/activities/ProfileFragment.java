@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.example.n.myfirstapplication.R;
 
+/***
+ * ProfileFragment display the content in Profile Tab.
+ */
 public class ProfileFragment extends Fragment {
 
     @Nullable

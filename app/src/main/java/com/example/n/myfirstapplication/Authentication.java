@@ -64,8 +64,8 @@ public class Authentication extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(mEmailField.getText().toString(),
-                        mPasswordField.getText().toString());
+                signIn(mEmailField.getText().toString().trim(),
+                        mPasswordField.getText().toString().trim());
             }
         });
 

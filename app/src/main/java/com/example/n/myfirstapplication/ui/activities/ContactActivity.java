@@ -18,6 +18,8 @@ import com.example.n.myfirstapplication.ItemSeperator;
 import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.ui.adapters.ContactAdapter;
+import com.example.n.myfirstapplication.untilities.FirebaseReferences;
+import com.example.n.myfirstapplication.untilities.FirebaseStrings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,11 +31,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+
+/***
+ * Contact tab displays users contacts
+ */
 public class ContactActivity extends Fragment {
 
     private FloatingActionButton addContact;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
     private DatabaseReference mContacts;
     private DatabaseReference mRequests;
     private DatabaseReference mUser;
@@ -51,22 +55,30 @@ public class ContactActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the view using the activity contact layout
         view = inflater.inflate(R.layout.activity_contact,container,false);
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mContacts = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("contacts");
-        mRequests = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("requests");
-        mUser = mDatabase.child("users").child(mAuth.getCurrentUser().getUid());
 
-        getActivity().setTitle("Contacts");
+        // Acquire Firebase login and database references.
+        mContacts = FirebaseReferences.USER_NODE
+                    .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
+                    .child(FirebaseStrings.CONTACTS);
+        mRequests = FirebaseReferences.USER_NODE.child("users")
+                    .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
+                    .child(FirebaseStrings.REQUESTS);
+        mUser = FirebaseReferences.USER_NODE.child("users")
+                .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid());
+
+        // Set tab title
+        getActivity().setTitle("Manage contacts");
         mContext = getActivity().getApplicationContext();
 
         populateRequestList();
 
+        // Listening to contacts changes in FB Database
         mContacts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // update list view
+                // Update list view
                 if(dataSnapshot.exists()) {
                     userContacts.clear();
                     userContacts.add(new ItemSeperator("Contacts"));
@@ -79,6 +91,7 @@ public class ContactActivity extends Fragment {
                                 tmpUser.isMessagePermission(), tmpUser.isImagePermission()));
                     }
 
+                    // Sort the contacts in alphabetical order
                     Collections.sort(tmpList, new Comparator<ItemInListView>() {
                         @Override
                         public int compare(ItemInListView o1, ItemInListView o2) {
@@ -100,11 +113,11 @@ public class ContactActivity extends Fragment {
             }
         });
 
-
+        // Listening for new request in FB Database
         mRequests.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // update list view
+                // Update list view
                 if(dataSnapshot.exists()){
                     userRequests.clear();
                     userRequests.add(new ItemSeperator("Requests"));
@@ -147,17 +160,26 @@ public class ContactActivity extends Fragment {
         return view;
     }
 
+    /**
+     * Open dialog and search for user.
+     */
     public void showAddContactDialog(){
         DialogFragment dialog = new AddContactDialogFragment();
         dialog.show(getActivity().getFragmentManager(), "AddContactDialog");
     }
 
+    /**
+     * Set lister adapters
+     */
     public void populateRequestList(){
         contactAdapter = new ContactAdapter(mContext, userRequests);
         ListView requestListView = (ListView) view.findViewById(R.id.requestList);
         requestListView.setAdapter(contactAdapter);
     }
 
+    /**
+     * Clear contacts and requests lists
+     */
     public void updateRequestList(){
         list.clear();
         list.addAll(userRequests);

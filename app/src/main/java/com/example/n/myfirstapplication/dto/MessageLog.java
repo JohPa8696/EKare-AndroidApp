@@ -67,6 +67,11 @@ public class MessageLog implements Comparable {
         this.profileUri = profileUri;
     }
 
+    /**
+     * Compare message log object base of the sent date
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(@NonNull Object o) {
         MessageLog otherLog= (MessageLog) o;

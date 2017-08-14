@@ -29,6 +29,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * MessageScreenActivity displays the notification history
+ */
 public class MessageScreenActivity extends AppCompatActivity{
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS=1;
     private FirebaseDatabase mdatabase;
@@ -47,14 +50,14 @@ public class MessageScreenActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_screen);
-        // Extract message_receiver.xml log id
-        Bundle mlID = getIntent().getExtras();
 
-        messageLogID= mlID.get("id").toString();
+        // Extract message_receiver.xml log id
         // Set the contact name in action bar
+        Bundle mlID = getIntent().getExtras();
         String title = mlID.get("title").toString();
         setTitle(title);
 
+        // Acquire Firebase references
         mdatabase = FirebaseDatabase.getInstance();
         mdbReference = mdatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -65,7 +68,7 @@ public class MessageScreenActivity extends AppCompatActivity{
         messages = new ArrayList<>();
 
         // Get messages from database
-
+        messageLogID= mlID.get("id").toString();
         DatabaseReference messagesDBRef= mdbReference.child("message_log").child(messageLogID).child("messages");
 
         messagesDBRef.addValueEventListener(new ValueEventListener() {

@@ -10,14 +10,12 @@ import com.example.n.myfirstapplication.ui.adapters.SectionsPageAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+/**
+ * Main activity, tabs containers
+ */
 public class Main extends AppCompatActivity {
 
     private SectionsPageAdapter sectionAdapter;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
-    private DatabaseReference mUser;
-    private DatabaseReference mMesaages;
-
     private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +30,13 @@ public class Main extends AppCompatActivity {
         layout.setupWithViewPager(mViewPager);
     }
 
+    /***
+     * Adding tabs for views
+     * @param viewPager
+     */
     public void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MessageLogsActivity(),"Conversations");
+        adapter.addFragment(new MessageLogsActivity(),"Notifications");
         adapter.addFragment(new ContactActivity(),"Contacts");
         adapter.addFragment(new ProfileFragment(), "Profile");
         viewPager.setAdapter(adapter);

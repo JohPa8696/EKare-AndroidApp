@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.logging.SimpleFormatter;
 
 /**
+ * Contact class represents user contact
  * Created by n on 18/07/2017.
  */
 
