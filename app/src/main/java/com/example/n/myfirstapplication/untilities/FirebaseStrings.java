@@ -11,4 +11,7 @@ public class FirebaseStrings {
     public final static String MESSAGE = "messages";
     public final static String CONTACTS = "contacts";
     public final static String REQUESTS = "requests";
+    public final static String IMAGE = "images";
+    public final static String PROFILEPIC = "profilepics";
+
 }

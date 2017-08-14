@@ -22,11 +22,13 @@ public class FirebaseReferences {
     /**
      * Firebase profile photo storage
      */
-    public final static StorageReference PROFILE_IMAGE_STORAGE = MY_FIREBASE_STORAGE.getReference().child("profilepics");
+    public final static StorageReference PROFILE_IMAGE_STORAGE = MY_FIREBASE_STORAGE.getReference()
+                                                                .child(FirebaseStrings.PROFILEPIC);
     /**
      * Firebase image accident storage
      */
-    public final static StorageReference IMAGE_STORAGE = MY_FIREBASE_STORAGE.getReference().child("images");
+    public final static StorageReference IMAGE_STORAGE = MY_FIREBASE_STORAGE.getReference()
+                                                        .child(FirebaseStrings.IMAGE);
     /**
      * Firebase database
      */
@@ -34,17 +36,19 @@ public class FirebaseReferences {
     /**
      * Firebase user data node
      */
-    public final static DatabaseReference USER_NODE = MY_FIREBASE_DATABASE.getReference().child("users");
+    public final static DatabaseReference USER_NODE = MY_FIREBASE_DATABASE.getReference()
+                                                        .child(FirebaseStrings.USER);
     /**
      * Firebase contact node
      */
-    public final static DatabaseReference CONTACT_NODE = USER_NODE.child("contacts");
+    public final static DatabaseReference CONTACT_NODE = USER_NODE.child(FirebaseStrings.CONTACTS);
     /**
      * Firebase message log node
      */
-    public final static DatabaseReference MESSAGELOG_NODE = MY_FIREBASE_DATABASE.getReference().child("message_log");
+    public final static DatabaseReference MESSAGELOG_NODE = MY_FIREBASE_DATABASE.getReference()
+                                                            .child(FirebaseStrings.MESSAGELOG);
     /**
      * Firebase message node
      */
-    public final static DatabaseReference MESSAGE_NODE = MESSAGELOG_NODE.child("messages");
+    public final static DatabaseReference MESSAGE_NODE = MESSAGELOG_NODE.child(FirebaseStrings.MESSAGE);
 }

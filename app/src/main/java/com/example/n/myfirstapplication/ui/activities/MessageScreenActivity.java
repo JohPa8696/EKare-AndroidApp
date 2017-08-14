@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.dto.Message;
@@ -46,6 +47,7 @@ public class MessageScreenActivity extends AppCompatActivity{
 
     private String messageLogID;
     private String contactPhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,6 @@ public class MessageScreenActivity extends AppCompatActivity{
         messagesLv = (ListView) findViewById(R.id.messages_lv);
         messages = new ArrayList<>();
 
-        // Get messages from database
         messageLogID= mlID.get("id").toString();
         DatabaseReference messagesDBRef= mdbReference.child("message_log").child(messageLogID).child("messages");
 
@@ -92,44 +93,19 @@ public class MessageScreenActivity extends AppCompatActivity{
             }
         });
 
-        // FOR APPENDING SINGLE MESSAGE WHEN ARRIVED - TESTING RIGHT NOW
-        messagesDBRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         // Get the email of the contact
         String userID = mAuth.getCurrentUser().getUid();
-        DatabaseReference contactEmailRef = mdbReference.child("users").child(userID)
+        DatabaseReference contactEmailRef = FirebaseDatabase.getInstance().getReference().child("users").child(userID)
                 .child("contacts").child(messageLogID).child("email");
         final String[] contactEmail={""};
         contactEmailRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot child: dataSnapshot.getChildren()){
-                        contactEmail[0]=child.getValue().toString();
-                }
+                String email = dataSnapshot.getValue().toString();
+//                for(DataSnapshot child: dataSnapshot.getChildren()){
+//                        contactEmail[0]=child.getValue().toString();
+//                    Toast.makeText(getApplication().getBaseContext(),"Take a profile picture",Toast.LENGTH_SHORT).show();
+//                }
             }
 
             @Override
