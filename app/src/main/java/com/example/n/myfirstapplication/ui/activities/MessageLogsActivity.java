@@ -38,10 +38,7 @@ public class MessageLogsActivity extends Fragment {
     private static final String TAG ="Notifications";
     private ListView messageLogsLv;
     private MessageLogListAdapter adapter;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mDatabaseRef;
     private DatabaseReference mContactsRef;
-    private DatabaseReference mUsersRef;
     private TextView numConversations;
     private HashMap<String,MessageLog> messageLogList;
     private Intent messagesScreen;
