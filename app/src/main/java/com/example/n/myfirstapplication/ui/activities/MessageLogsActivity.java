@@ -17,6 +17,8 @@ import com.example.n.myfirstapplication.dto.MessageLog;
 import com.example.n.myfirstapplication.R;
 import com.example.n.myfirstapplication.dto.User;
 import com.example.n.myfirstapplication.ui.adapters.MessageLogListAdapter;
+import com.example.n.myfirstapplication.untilities.FirebaseReferences;
+import com.example.n.myfirstapplication.untilities.FirebaseStrings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +42,6 @@ public class MessageLogsActivity extends Fragment {
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mContactsRef;
     private DatabaseReference mUsersRef;
-    private FirebaseAuth userAuth;
     private TextView numConversations;
     private HashMap<String,MessageLog> messageLogList;
     private Intent messagesScreen;
@@ -59,10 +60,9 @@ public class MessageLogsActivity extends Fragment {
         numConversations = (TextView) view.findViewById(R.id.noConvo_tv);
 
         // Getting Firebase references
-        userAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseRef = mDatabase.getReference();
-        mContactsRef= mDatabaseRef.child("users").child(userAuth.getCurrentUser().getUid()).child("contacts");
+        mContactsRef= FirebaseReferences.USER_NODE
+                        .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
+                        .child(FirebaseStrings.CONTACTS);
 
         // Getting the contact list
         mContactsRef.addValueEventListener(new ValueEventListener() {
@@ -88,8 +88,7 @@ public class MessageLogsActivity extends Fragment {
         });
 
         // Get contact profile Uri
-        mUsersRef = mDatabaseRef.child("users");
-        mUsersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseReferences.USER_NODE.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
