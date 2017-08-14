@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MessageLogsActivity extends Fragment {
-    private static final String TAG ="Conversations";
+    private static final String TAG ="Notifications";
     private ListView messageLogsLv;
     private MessageLogListAdapter adapter;
     private FirebaseDatabase mDatabase;
@@ -52,7 +52,7 @@ public class MessageLogsActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_message_logs,container,false);
 
         // Set the title
-        getActivity().setTitle("Notifications");
+        getActivity().setTitle(TAG);
         messagesScreen = new Intent(getActivity(), MessageScreenActivity.class);
         messageLogsLv = (ListView) view.findViewById(R.id.messagelogs_listview);
         messageLogList= new HashMap<>();

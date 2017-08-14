@@ -36,7 +36,7 @@ import java.util.Comparator;
  * Contact tab displays users contacts
  */
 public class ContactActivity extends Fragment {
-
+    private final static String TAG ="Manage contacts";
     private FloatingActionButton addContact;
     private DatabaseReference mContacts;
     private DatabaseReference mRequests;
@@ -69,7 +69,7 @@ public class ContactActivity extends Fragment {
                 .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid());
 
         // Set tab title
-        getActivity().setTitle("Manage contacts");
+        getActivity().setTitle(TAG);
         mContext = getActivity().getApplicationContext();
 
         populateRequestList();

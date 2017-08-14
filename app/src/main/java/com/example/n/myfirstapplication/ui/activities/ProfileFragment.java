@@ -14,12 +14,12 @@ import com.example.n.myfirstapplication.R;
  * ProfileFragment display the content in Profile Tab.
  */
 public class ProfileFragment extends Fragment {
-
+    private static final String TAG = "User Profile";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile,container,false);
-        getActivity().setTitle("Profile");
+        getActivity().setTitle(TAG);
         return view;
     }
 
