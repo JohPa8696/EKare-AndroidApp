@@ -13,8 +13,12 @@ import android.widget.TextView;
 
 import com.example.n.myfirstapplication.Authentication;
 import com.example.n.myfirstapplication.R;
+import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.dto.Message;
 import com.example.n.myfirstapplication.dto.User;
+import com.example.n.myfirstapplication.untilities.FirebaseReferences;
+import com.example.n.myfirstapplication.untilities.FirebaseStrings;
+import com.example.n.myfirstapplication.untilities.UserGlobalValues;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,34 +44,20 @@ public class MessageAdapter extends BaseAdapter {
     private FirebaseStorage firebaseStorage;
     private FirebaseAuth user;
     private StorageReference storageReference;
-    private String userName;
+    private String userEmail;
+    private String userProfilePic = "";
+    private String otherProfilePic = "";
     private DatabaseReference userRef;
-    public MessageAdapter(Context context, List<Message> messages) {
+    public MessageAdapter(Context context, List<Message> messages, String email) {
         this.context = context;
         this.messages = messages;
         user = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
-        storageReference= firebaseStorage.getReference();
-        // Get the current user name
-        userRef = FirebaseDatabase.getInstance().getReference()
-                .child("users").child(user.getCurrentUser().getUid());
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    if(child.getKey().equals("name")) {
-                        userName = child.getValue().toString();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        storageReference = firebaseStorage.getReference();
+        this.userEmail = email;
+        // Get the current user email
+        userEmail = FirebaseReferences.MY_AUTH.getCurrentUser().getEmail();
+        userProfilePic = UserGlobalValues.contactProfileURIs.get(userEmail.trim().toLowerCase());
     }
 
     @Override
@@ -93,19 +83,70 @@ public class MessageAdapter extends BaseAdapter {
         TextView timestamp;
         ImageView image;
 
-//        if(!userName.toLowerCase().equals(messages.get(i).getSender().trim().toLowerCase())){
-        if(!user.getCurrentUser().getEmail().equals("kj@gmail.com")){
+//        if(userProfilePic.equals("")){
+//
+////            DatabaseReference picRef = FirebaseDatabase.getInstance()
+////                    .getReference().child(FirebaseStrings.USER);
+////            picRef.addListenerForSingleValueEvent(new ValueEventListener() {
+////                @Override
+////                public void onDataChange(DataSnapshot dataSnapshot) {
+////                    for(DataSnapshot child : dataSnapshot.getChildren()){
+////                        User user = child.getValue(User.class);
+////                        if(user.getEmail().trim().toLowerCase().equals(userEmail)){
+////                            userProfilePic = user.getProfilePicUri();
+////                        }
+////                    }
+////                }
+////
+////                @Override
+////                public void onCancelled(DatabaseError databaseError) {
+////
+////                }
+////            });
+//        }
+
+        // Get the contact profile pic uri
+        if(!messages.get(i).getSender().trim().toLowerCase().equals(userEmail)
+                &&otherProfilePic.equals("")){
+            otherProfilePic = UserGlobalValues.contactProfileURIs
+                                .get(messages.get(i).getSender().toLowerCase().trim());
+//            final String email = messages.get(i).getSender();
+//            DatabaseReference picRef = FirebaseDatabase.getInstance()
+//                    .getReference().child(FirebaseStrings.USER);
+//            picRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for(DataSnapshot child : dataSnapshot.getChildren()){
+//                        User user = child.getValue(User.class);
+//                        if(user.getEmail().trim().toLowerCase().equals(email)){
+//                            otherProfilePic = user.getProfilePicUri();
+//                        }
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+        }
+
+        String profilePicUri ="1501160313943.png";
+
+        // 2 different uis for reciever and sender
+        if(!userEmail.trim().toLowerCase().equals(messages.get(i).getSender().trim().toLowerCase())){
             v = View.inflate(context, R.layout.message_receiver, null);
             profilePic = (CircleImageView) v.findViewById(R.id.profilepicmessage_r_tv);
             messageBody = (TextView) v.findViewById(R.id.message_r_tv);
             timestamp = (TextView) v.findViewById(R.id.timestamp_r_tv);
             image = (ImageView) v.findViewById(R.id.accidentscene_r);
+            profilePicUri = otherProfilePic;
         }else{
             v = View.inflate(context, R.layout.message_sender, null);
             profilePic = (CircleImageView) v.findViewById(R.id.profilepicmessage_s_tv);
             messageBody = (TextView) v.findViewById(R.id.message_s_tv);
             timestamp = (TextView) v.findViewById(R.id.timestamp_s_tv);
             image = (ImageView) v.findViewById(R.id.accidentscene_s);
+            profilePicUri = userProfilePic;
         }
         String uri= messages.get(i).getImageURL();
 
@@ -118,18 +159,18 @@ public class MessageAdapter extends BaseAdapter {
         timestamp.setTypeface(robotoThinFont);
 
         // GetProfile picture for user,
-//        String profilePicUri ="1501160313943.png";
-//        if(!profilePicUri.equals("default_profilepic.png")){
-//            StorageReference profilePicRef = storageReference.child("profile_pictures").child(profilePicUri);
-////            profilePic.getLayoutParams().height=500;
-////            profilePic.getLayoutParams().width=600;
-//            // Load the image using Glide
-//            Glide.with(context)
-//                    .using(new FirebaseImageLoader())
-//                    .load(profilePicRef)
-//                    .into(profilePic);
-//        }
+        if(!profilePicUri.equals("default_profilepic.png")){
+            StorageReference profilePicRef = storageReference.child("profile_pictures").child(profilePicUri);
+//            profilePic.getLayoutParams().height=500;
+//            profilePic.getLayoutParams().width=600;
+            // Load the image using Glide
+            Glide.with(context)
+                    .using(new FirebaseImageLoader())
+                    .load(profilePicRef)
+                    .into(profilePic);
+        }
 
+        // Display image of accident
         if(!uri.equals("")){
             StorageReference imageRef = storageReference.child("image").child(uri);
             image.getLayoutParams().height=500;

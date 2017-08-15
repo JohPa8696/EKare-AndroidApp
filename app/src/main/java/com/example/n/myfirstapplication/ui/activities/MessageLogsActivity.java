@@ -19,6 +19,7 @@ import com.example.n.myfirstapplication.dto.User;
 import com.example.n.myfirstapplication.ui.adapters.MessageLogListAdapter;
 import com.example.n.myfirstapplication.untilities.FirebaseReferences;
 import com.example.n.myfirstapplication.untilities.FirebaseStrings;
+import com.example.n.myfirstapplication.untilities.UserGlobalValues;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,8 +58,8 @@ public class MessageLogsActivity extends Fragment {
         numConversations = (TextView) view.findViewById(R.id.noConvo_tv);
 
         // Getting Firebase references
-        mContactsRef= FirebaseReferences.USER_NODE
-                        .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
+        mContactsRef= FirebaseDatabase.getInstance().getReference().child("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child(FirebaseStrings.CONTACTS);
 
         // Getting the contact list
@@ -67,7 +68,6 @@ public class MessageLogsActivity extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 messageLogList.clear();
-
                 // Each datasnapshot is a contact instance
                 // We populate the contact list and pass it to the adapter which does the UI stuff
                 for(DataSnapshot child: children) {
@@ -88,10 +88,18 @@ public class MessageLogsActivity extends Fragment {
         FirebaseReferences.USER_NODE.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Store the uri for each contact on an external hashmap, bad code. but a Work-around
+                // for an ambiguous problem in MessageAdapter
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     User user = child.getValue(User.class);
                     if(messageLogList.get(user.getEmail().trim())!= null){
                         messageLogList.get(user.getEmail().trim()).setProfileUri(user.getProfilePicUri());
+                        UserGlobalValues.contactProfileURIs.put(user.getEmail().trim().toLowerCase(),user.getProfilePicUri());
+                    } else if(user.getEmail().trim().toLowerCase()
+                            .equals(FirebaseAuth.getInstance().getCurrentUser().getEmail().trim().toLowerCase())){
+                        UserGlobalValues.contactProfileURIs
+                                .put(FirebaseAuth.getInstance().getCurrentUser().getEmail().trim().toLowerCase()
+                                        ,user.getProfilePicUri());
                     }
                 }
 

@@ -80,8 +80,16 @@ public class MessageLog implements Comparable {
         Date otherDate = null;
         Date thisDate = null;
         try {
-            otherDate = format.parse(otherLog.getTimeStamp());
-            thisDate = format.parse(this.timeStamp);
+            if(otherLog.getTimeStamp().equals("") && this.timeStamp.equals("")) {
+                return 0;
+            }else if(otherLog.getTimeStamp().equals("")){
+                return 1;
+            }else if(this.timeStamp.equals("")){
+                return -1;
+            }else{
+                otherDate = format.parse(otherLog.getTimeStamp());
+                thisDate = format.parse(this.timeStamp);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
