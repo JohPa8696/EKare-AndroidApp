@@ -61,10 +61,26 @@ public class MessageScreenActivity extends AppCompatActivity{
         messagesLv = (ListView) findViewById(R.id.messages_lv);
         messages = new ArrayList<>();
 
-        messageLogID= mlID.get("id").toString();
-        DatabaseReference messagesDBRef = FirebaseReferences.MESSAGELOG_NODE.child(messageLogID)
-                                            .child(FirebaseStrings.MESSAGE);
+        // Get the email of the contact
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference contactEmailRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(userID)
+                .child("contacts").child(messageLogID).child("email");
+        contactEmailRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                contactEmail = dataSnapshot.getValue().toString();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        // Get messages from database
+        messageLogID= mlID.get("id").toString();
+        DatabaseReference messagesDBRef= FirebaseDatabase.getInstance().getReference().child("message_log").child(messageLogID).child("messages");
         messagesDBRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,23 +102,6 @@ public class MessageScreenActivity extends AppCompatActivity{
             }
         });
 
-        // Get the email of the contact
-        String userID = FirebaseReferences.MY_AUTH.getCurrentUser().getUid();
-        DatabaseReference contactEmailRef = FirebaseReferences.USER_NODE.child(userID)
-                                            .child(FirebaseStrings.CONTACTS)
-                                            .child(messageLogID)
-                                            .child(FirebaseStrings.EMAIL);
-        contactEmailRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                contactEmail = dataSnapshot.getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         // Get the phone number of the contact
         DatabaseReference usersReference = FirebaseReferences.USER_NODE;
@@ -111,8 +110,8 @@ public class MessageScreenActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child: dataSnapshot.getChildren()){
                     User user = child.getValue(User.class);
-                    if(user.email.trim().equals(contactEmail)){
-                        contactPhone = user.phone;
+                    if(user.getEmail().trim().equals(contactEmail.trim())){
+                        contactPhone = user.getPhone();
                         break;
                     }
                 }
