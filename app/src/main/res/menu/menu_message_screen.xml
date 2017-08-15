@@ -11,7 +11,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/call_emergency"
-        android:icon="@mipmap/ic_ambunance"
+        android:icon="@mipmap/ic_ambulance"
         android:title="@string/call_emergency_service"
         app:showAsAction="always" />
 </menu>

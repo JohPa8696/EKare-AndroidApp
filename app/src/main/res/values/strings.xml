@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KSys</string>
+    <string name="app_name">Kare Smart System</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
     <string name="label_name">Name:</string>
