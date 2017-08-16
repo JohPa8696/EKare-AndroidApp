@@ -90,8 +90,9 @@ public class Authentication extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null){
 //            Intent myintent = new Intent(this, NavigationActivity.class);
-            Intent myintent = new Intent(this, Main.class);
-            startActivity(myintent);
+            Intent mainIntent = new Intent(this, Main.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(mainIntent);
             // After user login, remove signin screen from the stack
             //finish();
         }else{

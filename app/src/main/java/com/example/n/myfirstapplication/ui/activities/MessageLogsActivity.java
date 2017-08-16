@@ -53,6 +53,8 @@ public class MessageLogsActivity extends Fragment {
         // Set the title
         getActivity().setTitle(TAG);
         messagesScreen = new Intent(getActivity(), MessageScreenActivity.class);
+        // Dont save this screen in the back history
+        messagesScreen.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         messageLogsLv = (ListView) view.findViewById(R.id.messagelogs_listview);
         messageLogList= new HashMap<>();
         numConversations = (TextView) view.findViewById(R.id.noConvo_tv);
