@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.os.IResultReceiver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,15 +18,13 @@ import com.example.n.myfirstapplication.dto.User;
 import com.example.n.myfirstapplication.ui.adapters.MessageAdapter;
 import com.example.n.myfirstapplication.untilities.FirebaseReferences;
 import com.example.n.myfirstapplication.untilities.FirebaseStrings;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +57,39 @@ public class MessageScreenActivity extends AppCompatActivity{
         messagesLv = (ListView) findViewById(R.id.messages_lv);
         messages = new ArrayList<>();
 
+        // Get list of messages
+        messageLogID= mlID.get("id").toString();
+        DatabaseReference messagesDBRef = FirebaseReferences.MESSAGELOG_NODE.child(messageLogID)
+                                            .child(FirebaseStrings.MESSAGE);
+
+        messagesDBRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                messages.clear();
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    Message message = child.getValue(Message.class);
+                    messages.add(message);
+                }
+
+                // Set the adapter
+                messageAdapter = new MessageAdapter(getApplicationContext(),messages, contactEmail);
+                messagesLv.setAdapter(messageAdapter);
+                // Manually set the scroll to the bottom of the message_receiver.xml log
+                messagesLv.setSelection(messageAdapter.getCount()-1);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         // Get the email of the contact
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference contactEmailRef = FirebaseDatabase.getInstance().getReference()
-                .child("users").child(userID)
-                .child("contacts").child(messageLogID).child("email");
+        String userID = FirebaseReferences.MY_AUTH.getCurrentUser().getUid();
+        DatabaseReference contactEmailRef = FirebaseReferences.USER_NODE.child(userID)
+                .child(FirebaseStrings.CONTACTS)
+                .child(messageLogID)
+                .child(FirebaseStrings.EMAIL);
         contactEmailRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -77,31 +101,6 @@ public class MessageScreenActivity extends AppCompatActivity{
 
             }
         });
-
-        // Get messages from database
-        messageLogID= mlID.get("id").toString();
-        DatabaseReference messagesDBRef= FirebaseDatabase.getInstance().getReference().child("message_log").child(messageLogID).child("messages");
-        messagesDBRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                messages.clear();
-                for(DataSnapshot child : dataSnapshot.getChildren()){
-                    Message message = child.getValue(Message.class);
-                    messages.add(message);
-                }
-                messageAdapter = new MessageAdapter(getApplicationContext(),messages);
-                messagesLv.setAdapter(messageAdapter);
-
-                // Manually set the scroll to the bottom of the message_receiver.xml log
-                messagesLv.setSelection(messageAdapter.getCount()-1);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
 
         // Get the phone number of the contact
         DatabaseReference usersReference = FirebaseReferences.USER_NODE;

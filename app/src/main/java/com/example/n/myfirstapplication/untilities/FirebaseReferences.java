@@ -51,4 +51,5 @@ public class FirebaseReferences {
      * Firebase message node
      */
     public final static DatabaseReference MESSAGE_NODE = MESSAGELOG_NODE.child(FirebaseStrings.MESSAGE);
+
 }

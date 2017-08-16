@@ -16,9 +16,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.n.myfirstapplication.dto.User;
 import com.example.n.myfirstapplication.ui.activities.Main;
@@ -45,12 +48,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.util.Scanner;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,6 +83,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     private EditText mLastNameField;
     private EditText mEmailConfirmField;
     private EditText mPasswordConfirmField;
+    private TextView mTermsAndConditions;
 
     private Spinner mGendersSpinner;
     private Spinner mRolesSpinner;
@@ -106,12 +115,14 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         mGendersSpinner = (Spinner) findViewById(R.id.spinner_genders);
         mRolesSpinner =(Spinner) findViewById(R.id.spinner_role);
         mTermsContidionsCb =(CheckBox) findViewById(R.id.checkbox_tac);
+        mTermsAndConditions = (TextView) findViewById(R.id.termsandconditions_tv);
 
         // Add event listeners for buttons and imagebuttons
-        mChooseFromGalleryIBtn.setOnClickListener(this);
+        mChooseFromGalleryIBtn.setOnClickListener(CreateAccount.this);
         mTakePictureIBtn.setOnClickListener(this);
         create = (Button) findViewById(R.id.createBtn);
         create.setOnClickListener(this);
+        mTermsAndConditions.setOnClickListener(this);
 
         cancel = (Button) findViewById(R.id.cancelBtn);
         cancel.setOnClickListener(this);
@@ -155,6 +166,37 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                     String[] permissions ={Manifest.permission.CAMERA};
                     requestPermissions(permissions,REQUEST_IMAGE_CAPTURE);
                 }
+                break;
+            case R.id.termsandconditions_tv:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_termsandconditions,null);
+                TextView tncTv = (TextView) mView.findViewById(R.id.tnc_tv);
+                StringBuilder stringBuilder =new StringBuilder();
+                try {
+                    InputStream is = getAssets().open("files/termsandconditions.txt");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    String line ="";
+                    while((line = reader.readLine()) != null){
+                        stringBuilder.append(line+"\n");
+                    }
+                    reader.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                tncTv.setMovementMethod(new ScrollingMovementMethod());
+                tncTv.setText(stringBuilder.toString());
+                builder.setView(mView);
+                final AlertDialog alert = builder.create();
+                Button backBtn = (Button) mView.findViewById(R.id.backBtn);
+                backBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.cancel();
+                    }
+                });
+                alert.show();
                 break;
             default:
                 break;

@@ -62,10 +62,10 @@ public class ContactActivity extends Fragment {
         mContacts = FirebaseReferences.USER_NODE
                     .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
                     .child(FirebaseStrings.CONTACTS);
-        mRequests = FirebaseReferences.USER_NODE.child("users")
+        mRequests = FirebaseReferences.USER_NODE
                     .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
                     .child(FirebaseStrings.REQUESTS);
-        mUser = FirebaseReferences.USER_NODE.child("users")
+        mUser = FirebaseReferences.USER_NODE
                 .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid());
 
         // Set tab title
