@@ -223,15 +223,40 @@
                         android:entries="@array/roles"/>
                 </RelativeLayout>
             </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/checkbox_tac"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="I agree to the terms and conditions"
-                android:textColor="@color/colorAccent">
-            </CheckBox>
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+                    <CheckBox
+                        android:id="@+id/checkbox_tac"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="I agree to the "
+                        android:textColor="@color/colorAccent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="2dp">
+                    </CheckBox>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/termsandconditions_tv"
+                        android:text="Terms and Conditions"
+                        android:textColor="#42f4b3"
+                        android:textStyle ="bold"
+                        android:layout_alignParentLeft="true"></TextView>
+                </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
