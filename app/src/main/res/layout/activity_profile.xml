@@ -30,7 +30,7 @@
                 android:layout_weight="0.5">
 
                 <ImageButton
-                    android:id="@+id/signup_take_pic"
+                    android:id="@+id/take_pic_btn"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentRight="true"
@@ -48,7 +48,7 @@
                 android:layout_weight="0.5">
 
                 <ImageButton
-                    android:id="@+id/signup_choose_pic"
+                    android:id="@+id/choose_pic_btn"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentLeft="true"
@@ -63,7 +63,7 @@
             </RelativeLayout>
         </LinearLayout>
         <TextView
-            android:id="@+id/email_profile"
+            android:id="@+id/email_profile_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="example@gmail.com"
@@ -235,6 +235,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/role_profile_tv"
                         android:text="Patient"
                         android:textColor="@color/colorAccent">
                     </TextView>
@@ -291,6 +292,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/address_profile_tv"
                         android:text="123 Example St, Example, Example"
                         android:textColor="@color/colorAccent">
                     </TextView>

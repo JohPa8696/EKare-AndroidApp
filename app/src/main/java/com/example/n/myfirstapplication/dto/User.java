@@ -23,6 +23,7 @@ public class User {
     public HashMap<String,Contact> contacts;
     public HashMap<String,Contact> requests;
     public String deviceToken;
+    public String address="";
 
     public User(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -37,7 +38,10 @@ public class User {
         this.profilePicUri = Uri;
 
     }
-
+    public User(String name, String email, String phone, String gender, String role,String Uri, String addresss){
+        this(name,email,phone,gender,role,Uri);
+        this.address = addresss;
+    }
     public String getName() {
         return name;
     }
@@ -92,6 +96,14 @@ public class User {
 
     public void setMessagesReceived(List<Message> messagesReceived) {
         this.messagesReceived = messagesReceived;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String addresss) {
+        this.address = addresss;
     }
 
     public HashMap<String, Contact> getContacts() {
