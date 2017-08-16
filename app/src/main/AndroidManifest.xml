@@ -42,7 +42,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateAccount" />
-        <activity android:name=".Profile" />
         <!--<activity android:name=".ContactActivity" />-->
         <!--<activity android:name=".ui.activities.MessageLogsActivity" />-->
         <activity android:name=".ui.activities.MessageScreenActivity" />
