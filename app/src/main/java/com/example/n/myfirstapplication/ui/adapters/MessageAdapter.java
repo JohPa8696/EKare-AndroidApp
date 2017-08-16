@@ -83,54 +83,14 @@ public class MessageAdapter extends BaseAdapter {
         TextView timestamp;
         ImageView image;
 
-//        if(userProfilePic.equals("")){
-//
-////            DatabaseReference picRef = FirebaseDatabase.getInstance()
-////                    .getReference().child(FirebaseStrings.USER);
-////            picRef.addListenerForSingleValueEvent(new ValueEventListener() {
-////                @Override
-////                public void onDataChange(DataSnapshot dataSnapshot) {
-////                    for(DataSnapshot child : dataSnapshot.getChildren()){
-////                        User user = child.getValue(User.class);
-////                        if(user.getEmail().trim().toLowerCase().equals(userEmail)){
-////                            userProfilePic = user.getProfilePicUri();
-////                        }
-////                    }
-////                }
-////
-////                @Override
-////                public void onCancelled(DatabaseError databaseError) {
-////
-////                }
-////            });
-//        }
-
         // Get the contact profile pic uri
         if(!messages.get(i).getSender().trim().toLowerCase().equals(userEmail)
                 &&otherProfilePic.equals("")){
             otherProfilePic = UserGlobalValues.contactProfileURIs
                                 .get(messages.get(i).getSender().toLowerCase().trim());
-//            final String email = messages.get(i).getSender();
-//            DatabaseReference picRef = FirebaseDatabase.getInstance()
-//                    .getReference().child(FirebaseStrings.USER);
-//            picRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    for(DataSnapshot child : dataSnapshot.getChildren()){
-//                        User user = child.getValue(User.class);
-//                        if(user.getEmail().trim().toLowerCase().equals(email)){
-//                            otherProfilePic = user.getProfilePicUri();
-//                        }
-//                    }
-//                }
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
         }
 
-        String profilePicUri ="1501160313943.png";
+        String profilePicUri ="";
 
         // 2 different uis for reciever and sender
         if(!userEmail.trim().toLowerCase().equals(messages.get(i).getSender().trim().toLowerCase())){
@@ -161,8 +121,6 @@ public class MessageAdapter extends BaseAdapter {
         // GetProfile picture for user,
         if(!profilePicUri.equals("default_profilepic.png")){
             StorageReference profilePicRef = storageReference.child("profile_pictures").child(profilePicUri);
-//            profilePic.getLayoutParams().height=500;
-//            profilePic.getLayoutParams().width=600;
             // Load the image using Glide
             Glide.with(context)
                     .using(new FirebaseImageLoader())
