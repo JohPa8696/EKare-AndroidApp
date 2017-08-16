@@ -17,6 +17,7 @@ public class Main extends AppCompatActivity {
 
     private SectionsPageAdapter sectionAdapter;
     private ViewPager mViewPager;
+    private Boolean allowMoveback=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,10 @@ public class Main extends AppCompatActivity {
         layout.setupWithViewPager(mViewPager);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(allowMoveback);
+    }
     /***
      * Adding tabs for views
      * @param viewPager

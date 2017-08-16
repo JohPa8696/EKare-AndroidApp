@@ -92,6 +92,8 @@ public class Authentication extends AppCompatActivity {
 //            Intent myintent = new Intent(this, NavigationActivity.class);
             Intent myintent = new Intent(this, Main.class);
             startActivity(myintent);
+            // After user login, remove signin screen from the stack
+            //finish();
         }else{
 
         }
