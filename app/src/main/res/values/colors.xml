@@ -10,4 +10,5 @@
     <color name="signupButton">#33cc33</color>
     <color name="loginButton"> #7171da</color>
     <color name="cbgray" >#a6a6a6</color>
+    <color name="lightgreen">#a6ffa0</color>
 </resources>

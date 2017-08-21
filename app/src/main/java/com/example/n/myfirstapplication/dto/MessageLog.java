@@ -18,13 +18,23 @@ public class MessageLog implements Comparable {
     private String userName;
     private String lastMessage;
     private String timeStamp;
+    private int numNotifications;
 
     public MessageLog(){}
-    public MessageLog(String messageLogId, String userName, String lastMessage, String timeStamp) {
+    public MessageLog(String messageLogId, String userName, String lastMessage, String timeStamp, int numNotifications) {
         this.messageLogId = messageLogId;
         this.userName = userName;
         this.lastMessage = lastMessage;
         this.timeStamp = timeStamp;
+        this.numNotifications = numNotifications;
+    }
+
+    public int getNumNotifications() {
+        return numNotifications;
+    }
+
+    public void setNumNotifications(int numNotifications) {
+        this.numNotifications = numNotifications;
     }
 
     public String getMessageLogId() {

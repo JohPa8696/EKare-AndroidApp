@@ -1,9 +1,13 @@
 package com.example.n.myfirstapplication.ui.adapters;
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +17,8 @@ import com.example.n.myfirstapplication.R;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -53,10 +59,12 @@ public class MessageLogListAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(mContext, R.layout.message_log,null);
         CircleImageView profilePic = (CircleImageView) v.findViewById(R.id.profilepic_iv);
-        TextView username = (TextView) v.findViewById(R.id.username_tv);
-        TextView latestMessage = (TextView) v.findViewById(R.id.latestmessage_tv);
-        TextView timestamp = (TextView) v.findViewById(R.id.timestamp_tv);
-
+        TextView usernameTv= (TextView) v.findViewById(R.id.username_tv);
+        TextView latestMessageTv = (TextView) v.findViewById(R.id.latestmessage_tv);
+        TextView timestampTv = (TextView) v.findViewById(R.id.timestamp_tv);
+        TextView numNotificationsTv = (TextView) v.findViewById(R.id.num_notifications_tv);
+        LinearLayout notificationLo = (LinearLayout) v.findViewById(R.id.notification_layout);
+        RelativeLayout layout =(RelativeLayout) v.findViewById(R.id.messageloginfo_layout);
         //TODO :change profile pic
         String uri = contactList.get(i).getProfileUri();
         if(uri!=null&&!uri.equals("")){
@@ -70,11 +78,27 @@ public class MessageLogListAdapter extends BaseAdapter{
                     .into(profilePic);
         }
 
-        username.setText(contactList.get(i).getUserName());
-        if(!contactList.get(i).getLastMessage().equals("")){
-            latestMessage.setText(contactList.get(i).getLastMessage());
+        // Set the background color to indicate new notifications
+        int numNoti = contactList.get(i).getNumNotifications();
+        if(numNoti>0){
+//            layout.setBackgroundResource(R.color.lightgreen);
+//            latestMessageTv.setBackgroundColor(0xa6ffa0);
+//            timestampTv.setBackgroundColor(0xa6ffa0);
+            numNotificationsTv.setText(Integer.toString(numNoti));
+//            notificationIv.setImageResource(R.drawable.ic_notifications_black_24dp);
+            notificationLo.setBackgroundResource(R.drawable.ic_notifications_black_24dp);
         }
-        timestamp.setText(contactList.get(i).getTimeStamp());
+        usernameTv.setText(contactList.get(i).getUserName());
+        if(!contactList.get(i).getLastMessage().equals("")){
+            latestMessageTv.setText(contactList.get(i).getLastMessage());
+        }
+
+        timestampTv.setText(contactList.get(i).getTimeStamp());
+//        if(numNoti>0){
+//            timestampTv.setTextColor(0x303030);
+//        }else{
+//            timestampTv.setTextColor(0xa6a6a6);
+//        }
 
         v.setTag(contactList.get(i).getMessageLogId());
 

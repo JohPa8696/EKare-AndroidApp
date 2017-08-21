@@ -75,9 +75,19 @@ public class MessageLogsActivity extends Fragment {
                 for(DataSnapshot child: children) {
                     String messageLogId = child.getKey();
                     Contact contact = child.getValue(Contact.class);
-                    messageLogList.put(contact.getEmail(),
-                            new MessageLog(messageLogId, contact.getName(),contact.getLastMessage(),contact.getDate()));
+                    if(!(contact.lastMessage.equals("") && contact.getDate().equals(""))){
+                        int numNoti;
+                        if(contact.getNumNotifications()==null ||contact.getNumNotifications().equals("")){
+                            numNoti =0;
+                        }else{
+                            numNoti = Integer.parseInt(contact.getNumNotifications());
+                        }
+                        messageLogList.put(contact.getEmail(),
+                                new MessageLog(messageLogId, contact.getName(),contact.getLastMessage(),
+                                        contact.getDate(),numNoti));
+                    }
                 }
+                test();
             }
 
             @Override
@@ -86,6 +96,11 @@ public class MessageLogsActivity extends Fragment {
             }
         });
 
+
+        return view;
+    }
+
+    private void test (){
         // Get contact profile Uri
         FirebaseReferences.USER_NODE.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -128,6 +143,14 @@ public class MessageLogsActivity extends Fragment {
                         bundle.putString("title",((MessageLog)adapter.getItem(i)).getUserName());
                         messagesScreen.putExtras(bundle);
                         getActivity().startActivity(messagesScreen);
+                        // Update number of unseen notifications
+                        MessageLog ml= (MessageLog) adapterView.getAdapter().getItem(i);
+                        // When the user click on the message log aka notification history
+                        // Set the notification to 0
+                        FirebaseReferences.USER_NODE
+                                .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
+                                .child(FirebaseStrings.CONTACTS).child(ml.getMessageLogId())
+                                .child(FirebaseStrings.NUMNOTIFICATIONS).setValue("0");
                     }
                 });
 
@@ -138,8 +161,6 @@ public class MessageLogsActivity extends Fragment {
 
             }
         });
-
-        return view;
     }
 
 }

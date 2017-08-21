@@ -13,15 +13,17 @@ public class Message {
     public String sender; //user which send
     public String time;
     public String date;
+    private boolean isNew;
 
     public Message(){}
 
-    public Message( String imageURL, String message, String sender,String time, String date) {
+    public Message( String imageURL, String message, String sender,String time, String date, boolean isNew) {
         this.imageURL = imageURL;
         this.message = message;
         this.sender = sender;
         this.time = time;
         this.date = date;
+        this.isNew = isNew;
     }
 
     public String getTime() {

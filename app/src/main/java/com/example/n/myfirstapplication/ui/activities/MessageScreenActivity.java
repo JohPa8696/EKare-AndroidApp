@@ -76,6 +76,7 @@ public class MessageScreenActivity extends AppCompatActivity{
                 messagesLv.setAdapter(messageAdapter);
                 // Manually set the scroll to the bottom of the message_receiver.xml log
                 messagesLv.setSelection(messageAdapter.getCount()-1);
+
             }
 
             @Override
@@ -84,7 +85,8 @@ public class MessageScreenActivity extends AppCompatActivity{
             }
         });
 
-        // Get the email of the contact
+        // Get the email of the contact, so we can find the phone number of
+        // this contact from the list of user
         String userID = FirebaseReferences.MY_AUTH.getCurrentUser().getUid();
         DatabaseReference contactEmailRef = FirebaseReferences.USER_NODE.child(userID)
                 .child(FirebaseStrings.CONTACTS)

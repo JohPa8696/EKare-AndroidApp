@@ -25,7 +25,7 @@ public class Contact implements Comparable {
     public String lastMessage ="";
     public String date ="";
     public String deviceToken;
-
+    public String numNotifications;
 
     public Contact(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -44,13 +44,22 @@ public class Contact implements Comparable {
         this.messagePermission = messagePermission;
         this.imagePermission = imagePermission;
     }
-    public Contact(String name, String email, boolean messagePermission, boolean imagePermission,String lastMessage, String timestamp){
+    public Contact(String name, String email, boolean messagePermission, boolean imagePermission,String lastMessage, String timestamp, String numNotifications){
         this.name = name;
         this.email = email;
         this.messagePermission = messagePermission;
         this.imagePermission = imagePermission;
         this.lastMessage = lastMessage;
         this.date= timestamp;
+        this.numNotifications = numNotifications;
+    }
+
+    public String getNumNotifications() {
+        return numNotifications;
+    }
+
+    public void setNumNotifications(String numNotifications) {
+        this.numNotifications = numNotifications;
     }
 
     public String getLastMessage() {
