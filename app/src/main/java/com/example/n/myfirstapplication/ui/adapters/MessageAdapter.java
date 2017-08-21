@@ -92,19 +92,28 @@ public class MessageAdapter extends BaseAdapter {
 
         String profilePicUri ="";
 
-        // 2 different uis for reciever and sender
+        // 2 different uis for receiver and sender
         if(!userEmail.trim().toLowerCase().equals(messages.get(i).getSender().trim().toLowerCase())){
+            // current user is the receiver
             v = View.inflate(context, R.layout.message_receiver, null);
             profilePic = (CircleImageView) v.findViewById(R.id.profilepicmessage_r_tv);
             messageBody = (TextView) v.findViewById(R.id.message_r_tv);
             timestamp = (TextView) v.findViewById(R.id.timestamp_r_tv);
+            if(!messages.get(i).isReceiverSeen()){
+                messageBody.setBackgroundResource(R.drawable.chatbubble_receiver_hl);
+                timestamp.setTextColor(0x303030);
+            }
             image = (ImageView) v.findViewById(R.id.accidentscene_r);
             profilePicUri = otherProfilePic;
         }else{
+            // Current user is the sender
             v = View.inflate(context, R.layout.message_sender, null);
             profilePic = (CircleImageView) v.findViewById(R.id.profilepicmessage_s_tv);
             messageBody = (TextView) v.findViewById(R.id.message_s_tv);
             timestamp = (TextView) v.findViewById(R.id.timestamp_s_tv);
+            if(!messages.get(i).isSenderSeen()){
+                messageBody.setBackgroundResource(R.drawable.chatbubble_sender_hl);
+            }
             image = (ImageView) v.findViewById(R.id.accidentscene_s);
             profilePicUri = userProfilePic;
         }
@@ -139,10 +148,13 @@ public class MessageAdapter extends BaseAdapter {
                     .load(imageRef)
                     .into(image);
         }
+
         if(!messages.get(i).getMessage().trim().equals("")) {
             messageBody.setText(messages.get(i).getMessage());
         }
+        //timestamp.setText(messages.get(i).getDate()+ "\n" +messages.get(i).getTime());
         timestamp.setText(messages.get(i).getTime());
+
         return v;
     }
 

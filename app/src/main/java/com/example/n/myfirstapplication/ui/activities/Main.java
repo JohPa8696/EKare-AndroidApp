@@ -52,6 +52,28 @@ public class Main extends AppCompatActivity {
         adapter.addFragment(new ContactActivity(),"Contacts");
         adapter.addFragment(new ProfileFragment(), "Profile");
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    setTitle("Notifications");
+                }else if(position == 1){
+                    setTitle(("Contacts"));
+                }else{
+                    setTitle("User Profile");
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

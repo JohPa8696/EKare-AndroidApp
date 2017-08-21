@@ -71,7 +71,7 @@
                         android:id="@+id/timestamp_r_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10:30 PM"
+                        android:text="Jun 18\n10:30 PM"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="1dp"
                         android:layout_marginBottom="2dp"
@@ -79,7 +79,7 @@
                         android:textColor="#a9aaa5"
                         android:textSize="12dp"
                         android:layout_alignParentBottom="true"
-                        android:textAlignment="gravity"/>
+                        android:textAlignment="center" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

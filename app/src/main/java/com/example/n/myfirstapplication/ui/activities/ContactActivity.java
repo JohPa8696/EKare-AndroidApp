@@ -69,7 +69,7 @@ public class ContactActivity extends Fragment {
                 .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid());
 
         // Set tab title
-        getActivity().setTitle(TAG);
+        //getActivity().setTitle(TAG);
         mContext = getActivity().getApplicationContext();
 
         populateRequestList();

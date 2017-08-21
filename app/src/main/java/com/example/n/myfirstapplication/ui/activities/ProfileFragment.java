@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile,container,false);
-        getActivity().setTitle(TAG);
+        //getActivity().setTitle(TAG);
 
         // Obtains ui elements
         nameEditBtn = (ImageButton) view.findViewById(R.id.edit_name_btn);

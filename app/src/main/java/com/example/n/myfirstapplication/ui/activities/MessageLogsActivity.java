@@ -87,7 +87,8 @@ public class MessageLogsActivity extends Fragment {
                                         contact.getDate(),numNoti));
                     }
                 }
-                test();
+                // Find the profile pictures for each contact and set adapter
+                setAdapter();
             }
 
             @Override
@@ -100,7 +101,7 @@ public class MessageLogsActivity extends Fragment {
         return view;
     }
 
-    private void test (){
+    private void setAdapter (){
         // Get contact profile Uri
         FirebaseReferences.USER_NODE.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

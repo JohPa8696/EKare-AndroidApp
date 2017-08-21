@@ -68,6 +68,7 @@ public class MessageScreenActivity extends AppCompatActivity{
                 messages.clear();
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     Message message = child.getValue(Message.class);
+                    message.setMessageId(child.getKey());
                     messages.add(message);
                 }
 
@@ -76,7 +77,6 @@ public class MessageScreenActivity extends AppCompatActivity{
                 messagesLv.setAdapter(messageAdapter);
                 // Manually set the scroll to the bottom of the message_receiver.xml log
                 messagesLv.setSelection(messageAdapter.getCount()-1);
-
             }
 
             @Override

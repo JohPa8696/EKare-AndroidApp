@@ -8,22 +8,25 @@ package com.example.n.myfirstapplication.dto;
  */
 
 public class Message {
+    private String messageId;
     public String imageURL;
     public String message;
     public String sender; //user which send
     public String time;
     public String date;
-    private boolean isNew;
+    private boolean senderSeen;
+    private boolean receiverSeen;
 
     public Message(){}
 
-    public Message( String imageURL, String message, String sender,String time, String date, boolean isNew) {
+    public Message( String imageURL, String message, String sender,String time, String date, boolean senderSeen, boolean receiverSeen) {
         this.imageURL = imageURL;
         this.message = message;
         this.sender = sender;
         this.time = time;
         this.date = date;
-        this.isNew = isNew;
+        this.senderSeen = senderSeen;
+        this.receiverSeen = receiverSeen;
     }
 
     public String getTime() {
@@ -66,5 +69,27 @@ public class Message {
         this.sender = sender;
     }
 
+    public boolean isSenderSeen() {
+        return senderSeen;
+    }
 
+    public void setSenderSeen(boolean senderSeen) {
+        this.senderSeen = senderSeen;
+    }
+
+    public boolean isReceiverSeen() {
+        return receiverSeen;
+    }
+
+    public void setReceiverSeen(boolean receiverSeen) {
+        this.receiverSeen = receiverSeen;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
 }
