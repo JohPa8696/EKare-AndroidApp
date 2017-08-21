@@ -1,6 +1,8 @@
 package com.example.n.myfirstapplication.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.n.myfirstapplication.Authentication;
 import com.example.n.myfirstapplication.R;
+import com.example.n.myfirstapplication.dto.Contact;
 import com.example.n.myfirstapplication.ui.adapters.SectionsPageAdapter;
 import com.example.n.myfirstapplication.untilities.FirebaseReferences;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,6 +94,10 @@ public class Main extends AppCompatActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_logout:
+                SharedPreferences sharePref =  getSharedPreferences("userAccount", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharePref.edit();
+                editor.clear();
+                editor.commit();
                 FirebaseReferences.MY_AUTH.signOut();
                 logout();
                 return true;

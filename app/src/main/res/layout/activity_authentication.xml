@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Remember me"
+                    android:text="Keep me login"
                     android:textSize="14dp"
                     android:textColor="@color/cbgray"
                     android:layout_marginRight="10dp"
