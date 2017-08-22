@@ -51,7 +51,6 @@ public class Authentication extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_authentication);
 
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();

@@ -312,18 +312,48 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/delete_account_btn"
-            android:layout_gravity="right"
-            android:ems="8"
-            android:text="Delete Account"
-            android:textAllCaps="false"
-            android:textColor="@android:color/holo_red_dark"
-            android:layout_margin="5dp"
-            >
-        </Button>
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/save_changes_btn"
+                    android:layout_gravity="right"
+                    android:ems="8"
+                    android:text="Save changes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentRight="true"
+                    >
+                </Button>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/delete_account_btn"
+                    android:layout_gravity="right"
+                    android:ems="8"
+                    android:text="Delete Account"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:layout_margin="5dp"
+                    >
+                </Button>
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

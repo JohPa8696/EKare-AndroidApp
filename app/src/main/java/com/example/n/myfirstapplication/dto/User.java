@@ -13,17 +13,17 @@ import java.util.List;
 @IgnoreExtraProperties
 public class User {
 
-    public String name;
-    public String email;
-    public String phone;
+    private String name;
+    private String email;
+    private String phone;
     private String gender;
     private String role;
     private String profilePicUri;
-    public List<Message> messagesReceived;
-    public HashMap<String,Contact> contacts;
-    public HashMap<String,Contact> requests;
-    public String deviceToken;
-    public String address="";
+    private List<Message> messagesReceived;
+    private HashMap<String,Contact> contacts;
+    private HashMap<String,Contact> requests;
+    private String deviceToken;
+    private String address="";
 
     public User(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -38,9 +38,9 @@ public class User {
         this.profilePicUri = Uri;
 
     }
-    public User(String name, String email, String phone, String gender, String role,String Uri, String addresss){
+    public User(String name, String email, String phone, String gender, String role,String Uri, String address){
         this(name,email,phone,gender,role,Uri);
-        this.address = addresss;
+        this.address = address;
     }
     public String getName() {
         return name;
@@ -102,8 +102,8 @@ public class User {
         return address;
     }
 
-    public void setAddress(String addresss) {
-        this.address = addresss;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public HashMap<String, Contact> getContacts() {

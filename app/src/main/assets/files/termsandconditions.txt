@@ -6,10 +6,12 @@ Hi, customer! Please read these Terms and Conditions carefully before registerin
 By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.
 
 CONDITIONS
+
 1.	Intellectual property
 a.	We are offering you this app to use for your own personal use without cost, but you should be aware that you’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way for distribution.
 b.	You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions.
 c.	The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to us.
+
 2.	Privacy
 a.	As a patient, as part of the monitoring process, you agree that your personal information might be sent to others users
 b.	As a caregiver, you shall not use or share any personal information belong to other users outside of emergency situations.

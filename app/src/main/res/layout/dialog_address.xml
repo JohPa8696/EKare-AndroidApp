@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_border">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorPrimaryDark"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit_ad1_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address line 1"
+            android:textColorHint="@color/cbgray"
+            android:padding="3dp"
+            android:background="@drawable/dialog_edit_border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text|textAutoCorrect|textCapWords"
+            ></EditText>
+        <EditText
+            android:id="@+id/edit_ad2_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address line 2"
+            android:textColorHint="@color/cbgray"
+            android:padding="3dp"
+            android:background="@drawable/dialog_edit_border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text|textAutoCorrect|textCapWords"
+            ></EditText>
+        <EditText
+            android:id="@+id/edit_ad3_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:textColorHint="@color/cbgray"
+            android:padding="3dp"
+            android:background="@drawable/dialog_edit_border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text|textAutoCorrect|textCapWords"
+            ></EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6">
+                <EditText
+                    android:id="@+id/edit_ad4_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="State/Province"
+                    android:textColorHint="@color/cbgray"
+                    android:padding="3dp"
+                    android:background="@drawable/dialog_edit_border"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="text|textAutoCorrect|textCapWords"
+                    ></EditText>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4">
+                <EditText
+                    android:id="@+id/edit_ad5_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Postcode"
+                    android:textColorHint="@color/cbgray"
+                    android:padding="3dp"
+                    android:background="@drawable/dialog_edit_border"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="number"
+                    ></EditText>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/edit_address_save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:layout_gravity="right"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/lightgreen"
+            ></Button>
+    </LinearLayout>
+
+
+    <!--        android:background="@drawable/ripple_effect_edit_profile"-->
+</LinearLayout>
