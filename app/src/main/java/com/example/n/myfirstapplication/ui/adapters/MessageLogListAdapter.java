@@ -1,6 +1,7 @@
 package com.example.n.myfirstapplication.ui.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +70,7 @@ public class MessageLogListAdapter extends BaseAdapter{
         String uri = contactList.get(i).getProfileUri();
         if(uri!=null&&!uri.equals("")){
             StorageReference imageRef = storageReference.child("profile_pictures").child(uri);
-//            profilePic.getLayoutParams().height=500;
-//            profilePic.getLayoutParams().width=600;
+
             // Load the image using Glide
             Glide.with(mContext)
                     .using(new FirebaseImageLoader())
@@ -81,11 +81,9 @@ public class MessageLogListAdapter extends BaseAdapter{
         // Set the background color to indicate new notifications
         int numNoti = contactList.get(i).getNumNotifications();
         if(numNoti>0){
-//            layout.setBackgroundResource(R.color.lightgreen);
-//            latestMessageTv.setBackgroundColor(0xa6ffa0);
-//            timestampTv.setBackgroundColor(0xa6ffa0);
+            layout.setBackgroundColor(ContextCompat.getColor(mContext,R.color.lightgreen));
+            latestMessageTv.setTextColor(ContextCompat.getColor(mContext,R.color.colorPrimary));
             numNotificationsTv.setText(Integer.toString(numNoti));
-//            notificationIv.setImageResource(R.drawable.ic_notifications_black_24dp);
             notificationLo.setBackgroundResource(R.drawable.ic_notifications_black_24dp);
         }
         usernameTv.setText(contactList.get(i).getUserName());
@@ -94,11 +92,9 @@ public class MessageLogListAdapter extends BaseAdapter{
         }
 
         timestampTv.setText(contactList.get(i).getTimeStamp());
-//        if(numNoti>0){
-//            timestampTv.setTextColor(0x303030);
-//        }else{
-//            timestampTv.setTextColor(0xa6a6a6);
-//        }
+        if(numNoti>0){
+            timestampTv.setTextColor(ContextCompat.getColor(mContext,R.color.colorPrimary));
+        }
 
         v.setTag(contactList.get(i).getMessageLogId());
 

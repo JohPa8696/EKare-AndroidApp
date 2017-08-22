@@ -85,17 +85,28 @@ public class MessageLog implements Comparable {
     @Override
     public int compareTo(@NonNull Object o) {
         MessageLog otherLog= (MessageLog) o;
+        // First compare number of notifications
+        if (this.numNotifications > otherLog.getNumNotifications()){
+            return -1;
+        }else if (this.numNotifications < otherLog.getNumNotifications()){
+            return 1;
+        }else{
+            return compareDate(otherLog);
+        }
+    }
+
+    private int compareDate(MessageLog otherLog){
         DateFormat format = new SimpleDateFormat("MMM dd");
 
         Date otherDate = null;
         Date thisDate = null;
         try {
             if(otherLog.getTimeStamp().equals("") && this.timeStamp.equals("")) {
-                return 0;
+                return compareName(otherLog);
             }else if(otherLog.getTimeStamp().equals("")){
-                return 1;
-            }else if(this.timeStamp.equals("")){
                 return -1;
+            }else if(this.timeStamp.equals("")){
+                return 1;
             }else{
                 otherDate = format.parse(otherLog.getTimeStamp());
                 thisDate = format.parse(this.timeStamp);
@@ -103,6 +114,15 @@ public class MessageLog implements Comparable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return otherDate.compareTo(thisDate)  ;
+
+        int res = otherDate.compareTo(thisDate);
+        if(res == 0){
+            res = compareName(otherLog);
+        }
+        return res;
+    }
+
+    private int compareName(MessageLog otherLog){
+        return this.userName.compareTo(otherLog.getUserName());
     }
 }

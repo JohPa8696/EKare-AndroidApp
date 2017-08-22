@@ -125,7 +125,7 @@ public class MessageLogsActivity extends Fragment {
                 List<MessageLog> list = new ArrayList<MessageLog>(messageLogList.values());
                 Collections.sort(list);
                 // Pass the list of message_receiver.xml log to the adapter
-                adapter = new MessageLogListAdapter(getActivity().getApplicationContext(), new ArrayList<MessageLog>(messageLogList.values()));
+                adapter = new MessageLogListAdapter(getActivity().getApplicationContext(), list);
                 messageLogsLv.setAdapter(adapter);
 
                 // Set text view
