@@ -128,7 +128,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         // Retrieve user details from database
         DatabaseReference userDatabaseRef = FirebaseReferences.USER_NODE
                                             .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid());
-        userDatabaseRef.addValueEventListener(new ValueEventListener() {
+        userDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -312,7 +312,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             FirebaseReferences.USER_NODE
                                     .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
-                                    .child(FirebaseStrings.PROFILEPIC).setValue(photoUri);
+                                    .child(FirebaseStrings.PROFILEPHOTOURI).setValue(photoUri);
                             Toast.makeText(getContext(), "Upload profile picture success.", Toast.LENGTH_SHORT).show();
                             isProfilePicChanged = false;
                         }
@@ -359,7 +359,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             Bitmap picture = (Bitmap) extras.get("data");
             profilePicture.setImageBitmap(picture);
             isProfilePicChanged = true;
-            profilePicture.setTag("Personal");
         }else if(requestCode == REQUEST_GALLARY && resultCode ==RESULT_OK){
             // This is the address of the image on the SD card
             Uri imageUri = data.getData();
@@ -373,7 +372,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 profilePicture.setImageBitmap(bitmap);
                 isProfilePicChanged = true;
-                profilePicture.setTag("Personal");
             }catch (FileNotFoundException e){
                 e.printStackTrace();
                 Toast.makeText(getContext(),"Cannot find image",Toast.LENGTH_SHORT).show();
