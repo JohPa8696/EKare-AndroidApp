@@ -101,7 +101,7 @@ public class MessageAdapter extends BaseAdapter {
             timestamp = (TextView) v.findViewById(R.id.timestamp_r_tv);
             if(!messages.get(i).isReceiverSeen()){
                 messageBody.setBackgroundResource(R.drawable.chatbubble_receiver_hl);
-                timestamp.setTextColor(0x303030);
+                //timestamp.setTextColor(0x303030);
             }
             image = (ImageView) v.findViewById(R.id.accidentscene_r);
             profilePicUri = otherProfilePic;
