@@ -24,10 +24,11 @@ public class MyMessagingService extends FirebaseMessagingService {
     }
 
     private static final String TAG = "MyFirebaseMsgService";
-
+    private StorageReference mStorageRef;
     // [START receive_message]
     @Override
     public void onMessageReceived(final RemoteMessage remoteMessage) {
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages are handled
         // here in onMessageReceived whether the app is in the foreground or background. Data messages are the type
@@ -70,14 +71,13 @@ public class MyMessagingService extends FirebaseMessagingService {
                     .setSound(alarmSound)
                     .addAction(R.drawable.ic_call_emergency, "Emergency Service", phoneCallIntent);
 
-            String imageURL = remoteMessage.getData().get("img_url");
+            String imageName = remoteMessage.getData().get("img_name");
 
-            if(imageURL != null && !imageURL.equals("")){
+            if(imageName != null && !imageName.equals("")){
                 final Bitmap[] bmp = new Bitmap[1];
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference httpsReference = storage.getReferenceFromUrl(imageURL);
-                httpsReference.getBytes(10485760).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                StorageReference imageURL = mStorageRef.child("image/" + imageName);
+                imageURL.getBytes(10485760).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
                         bmp[0] = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
