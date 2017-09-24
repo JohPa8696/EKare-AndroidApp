@@ -50,12 +50,6 @@ public class MyMessagingService extends FirebaseMessagingService {
             final NotificationManager notif = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
             final Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-            /*
-            Notification notify=new Notification.Builder(getApplicationContext())
-                    .setContentTitle(remoteMessage.getNotification().getTitle())
-                    .setContentText(remoteMessage.getNotification().getBody())
-                    .setSmallIcon(R.drawable.ic_launcher).build();
-            */
             // Phone a number (emergency services)
             Intent phoneCall = new Intent(Intent.ACTION_CALL);
             phoneCall.setData(Uri.parse("tel: 0278272086"));
@@ -90,10 +84,6 @@ public class MyMessagingService extends FirebaseMessagingService {
             }else{
                 notif.notify(0, notify.build());
             }
-
-
-
-
         }
 
         // Check if message_receiver.xml contains a notification payload.
@@ -104,5 +94,4 @@ public class MyMessagingService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message_receiver.xml, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
 }

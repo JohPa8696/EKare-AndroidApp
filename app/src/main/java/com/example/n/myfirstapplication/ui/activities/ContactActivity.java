@@ -33,7 +33,8 @@ import java.util.Comparator;
 
 
 /***
- * Contact tab displays users contacts
+ * Contact tab displays users contacts and requests
+ * Created by john
  */
 public class ContactActivity extends Fragment {
     private final static String TAG ="Manage contacts";
@@ -43,7 +44,6 @@ public class ContactActivity extends Fragment {
     private DatabaseReference mUser;
 
     private Context mContext;
-
     private ContactAdapter contactAdapter;
 
     private ArrayList<ItemInListView> userRequests = new ArrayList<>();
@@ -109,7 +109,6 @@ public class ContactActivity extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 

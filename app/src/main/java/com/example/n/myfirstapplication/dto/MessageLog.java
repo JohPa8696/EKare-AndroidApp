@@ -8,11 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * This class represent an notifications/message log object.
+ * notifications/message logs contain the lastest message and the number of unseen notfications for
+ * a contact. They are displayed as items in the notifications tab.
  * Created by johnn on 7/15/2017.
  */
 
 public class MessageLog implements Comparable {
-
     private String messageLogId;
     private String profileUri;
     private String userName;
@@ -95,6 +97,12 @@ public class MessageLog implements Comparable {
         }
     }
 
+    /**
+     * Compares 2 message logs and determines which message log has the latest
+     * notification
+     * @param otherLog
+     * @return
+     */
     private int compareDate(MessageLog otherLog){
         DateFormat format = new SimpleDateFormat("MMM dd");
 
@@ -122,6 +130,11 @@ public class MessageLog implements Comparable {
         return res;
     }
 
+    /**
+     * To order message log in alphabetically order.
+     * @param otherLog
+     * @return
+     */
     private int compareName(MessageLog otherLog){
         return this.userName.compareTo(otherLog.getUserName());
     }

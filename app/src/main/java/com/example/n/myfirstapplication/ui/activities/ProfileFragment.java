@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.activity_profile,container,false);
         //getActivity().setTitle(TAG);
 
-        // Obtains ui elements
+        // Obtain ui components
         nameEditBtn = (ImageButton) view.findViewById(R.id.edit_name_btn);
         phoneEditBtn = (ImageButton) view.findViewById(R.id.edit_phone_btn);
         roleEditBtn = (ImageButton) view.findViewById(R.id.edit_role_btn);
@@ -267,20 +267,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 alertRole.show();
                 break;
             case R.id.save_changes_btn:
+
                 // Save the changes to database
-                // Set name
+                // Name
                 FirebaseReferences.USER_NODE
                         .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
                         .child(FirebaseStrings.NAME).setValue(nameTv.getText().toString().trim());
-                // Set phone
+                // Phone number
                 FirebaseReferences.USER_NODE
                         .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
                         .child(FirebaseStrings.PHONE).setValue(phoneTv.getText().toString().trim());
-                // Set role
+                // Role
                 FirebaseReferences.USER_NODE
                         .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
                         .child(FirebaseStrings.ROLE).setValue(roleTv.getText().toString().trim());
-                // Set address
+                // Address
                 FirebaseReferences.USER_NODE
                         .child(FirebaseReferences.MY_AUTH.getCurrentUser().getUid())
                         .child(FirebaseStrings.ADDRESS).setValue(locationTv.getText().toString().trim());
@@ -434,22 +435,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         Intent authActivity = new Intent(getActivity(), Authentication.class);
                         authActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(authActivity);
-//
-//                        // Get user data references
-//                        final User userInfo;
-//                        FirebaseReferences.USER_NODE.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                User userInfo =  dataSnapshot.getValue(User.class);
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//
-//                            }
-//                        });
-//                        // Delete user's entry in the user node
-//                        FirebaseReferences.USER_NODE.child(user.getUid()).removeValue();
 
                         // Delete user authentication
                         Toast.makeText(getContext(),"User account deleted!",Toast.LENGTH_SHORT).show();

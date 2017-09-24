@@ -35,6 +35,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This gets the users' contacts with newest notfications and display them in the notification tab
+ * Created by john
+ */
 public class MessageLogsActivity extends Fragment {
     private static final String TAG ="Notifications";
     private ListView messageLogsLv;
@@ -47,13 +51,15 @@ public class MessageLogsActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         // Inflate new screen using message log layout
         View view = inflater.inflate(R.layout.activity_message_logs,container,false);
 
         // Set the title
         getActivity().setTitle(TAG);
         messagesScreen = new Intent(getActivity(), MessageScreenActivity.class);
-        // Dont save this screen in the back history
+
+        // This screen will not be saved in the back history
         messagesScreen.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         messageLogsLv = (ListView) view.findViewById(R.id.messagelogs_listview);
         messageLogList= new HashMap<>();
@@ -93,19 +99,23 @@ public class MessageLogsActivity extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-
 
         return view;
     }
 
+    /**
+     * Set the adapter to display the ordered notification/message logs with profile picture
+     * in the notifications tab
+     */
     private void setAdapter (){
+
         // Get contact profile Uri
         FirebaseReferences.USER_NODE.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 // Store the uri for each contact on an external hashmap, bad code. but a Work-around
                 // for an ambiguous problem in MessageAdapter
                 for(DataSnapshot child : dataSnapshot.getChildren()){
@@ -121,9 +131,10 @@ public class MessageLogsActivity extends Fragment {
                     }
                 }
 
-                // Sort the list in order
+                // Rearrange the list by number of new notifications, latest timestamp and name
                 List<MessageLog> list = new ArrayList<MessageLog>(messageLogList.values());
                 Collections.sort(list);
+
                 // Pass the list of message_receiver.xml log to the adapter
                 adapter = new MessageLogListAdapter(getActivity().getApplicationContext(), list);
                 messageLogsLv.setAdapter(adapter);
@@ -159,7 +170,6 @@ public class MessageLogsActivity extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }

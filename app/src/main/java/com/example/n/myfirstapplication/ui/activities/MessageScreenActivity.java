@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***
- * MessageScreenActivity displays the notification history
+ * MessageScreenActivity displays the notification history with all past messages and images
  */
 public class MessageScreenActivity extends AppCompatActivity{
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS=1;
@@ -48,7 +48,7 @@ public class MessageScreenActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_screen);
 
-        // Extract message_receiver.xml log id
+        // Extract message log id
         // Set the contact name in action bar
         Bundle mlID = getIntent().getExtras();
         String title = mlID.get("title").toString();
@@ -137,7 +137,7 @@ public class MessageScreenActivity extends AppCompatActivity{
                 android.Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
+            // Request user for call permission
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.CALL_PHONE)) {
             } else {

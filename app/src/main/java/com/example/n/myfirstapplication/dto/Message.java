@@ -3,7 +3,7 @@ package com.example.n.myfirstapplication.dto;
 //import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
- * Message Class represent notifications sent from the server.
+ * Message Class represent notifications sent when falls are detected.
  * Created by n on 7/07/2017.
  */
 

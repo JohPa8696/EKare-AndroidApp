@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 
 /**
  * Main activity, tabs containers
+ * Three tabs include: Notifications, Contacts, User profile
+ * Created by john
  */
 public class Main extends AppCompatActivity {
 
@@ -45,6 +47,7 @@ public class Main extends AppCompatActivity {
     public void onBackPressed() {
         moveTaskToBack(allowMoveback);
     }
+
     /***
      * Adding tabs for views
      * @param viewPager
@@ -58,7 +61,6 @@ public class Main extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -74,7 +76,6 @@ public class Main extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -106,6 +107,9 @@ public class Main extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sign user out of the application
+     */
     private void logout(){
         if(FirebaseReferences.MY_AUTH.getCurrentUser() == null){
             this.finish();
