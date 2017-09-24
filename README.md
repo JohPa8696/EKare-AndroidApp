@@ -40,6 +40,7 @@ The app is not available in the app store currently. Hence to running/testing th
 6. Use the App
 
 ## Screenshots:
-![Screenshots](/EKare-AndroidApp/tree/master/screenshots)
+
+![Screenshots](https://github.com/JohPa8696/EKare-AndroidApp/tree/master/screenshots)
 
 
