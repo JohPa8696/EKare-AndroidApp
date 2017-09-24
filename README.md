@@ -8,17 +8,26 @@ This is the android application, one of the four component of our fall detection
 * Call emergency services
 * Call contact
 
-## Prerequisite
+## Authors: 
+
+### Johnny Pham 
+* UPI: dpha010
+* GithubID: JohPa8696
+### Vincent Nio
+* UPI: vnio666
+* GithubID: vNeon
+
+## Prerequisites
 The app is not available in the app store currently. Hence to running/testing the application requires:
 * Latest Version of Android Studio (3.0): https://developer.android.com/studio/index.html
 * JavaSDK and JavaJRE 8 or above: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 ## Installation - Run
-1. Clone the project from github using the command:
+1. Clone/Download the project from github using the command:
 
-  git clone https://github.com/JohPa8696/EKare-AndroidApp.git
+    * git clone https://github.com/JohPa8696/EKare-AndroidApp.git
   
-  Or download the zip file from https://github.com/JohPa8696/EKare-AndroidApp
+    * Or download the zip file from https://github.com/JohPa8696/EKare-AndroidApp
   
 2. Import the project into Android studio.
 
@@ -29,4 +38,7 @@ The app is not available in the app store currently. Hence to running/testing th
 5. Create an Android virtual device or Connect your android phone
 
 6. Use the App
+
+## Screenshots:
+
 
