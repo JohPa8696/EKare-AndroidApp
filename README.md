@@ -40,5 +40,6 @@ The app is not available in the app store currently. Hence to running/testing th
 6. Use the App
 
 ## Screenshots:
+![alt text](/EKare-AndroidApp/blob/master/screenshots/noti.png)
 
 
